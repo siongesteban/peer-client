@@ -7,7 +7,6 @@ import { TextField } from 'redux-form-material-ui';
 import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';
 import List, { ListItem, ListItemIcon } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import AccountIcon from 'material-ui-icons/AccountBox';
 import EmailIcon from 'material-ui-icons/Email';
 
@@ -90,9 +89,6 @@ class ProfileEditForm extends Component {
               placeholder="Email"
               fullWidth
             />
-          </ListItem>
-          <ListItem button>
-            <Typography variant="button">Change Password</Typography>
           </ListItem>
         </List>
       </FormGroup>

@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux'
 import { submit } from 'redux-form'
 
+import Button from 'material-ui/Button';
+
 import ResponsiveDialog from '../../../components/ResponsiveDialog';
 import ProfileEditForm from './ProfileEditForm';
 
@@ -44,6 +46,12 @@ class ProfileEdit extends React.Component {
         submitForm={submitForm}
       >
         <ProfileEditForm onSubmit={this.handleSubmit} />
+        <Button
+          style={{ justifyContent: 'left' }}
+          fullWidth
+        >
+          Update Password
+        </Button>
       </ResponsiveDialog>
     );
   }
