@@ -22,8 +22,6 @@ const styles = theme => ({
   button: {
     width: '100%',
   },
-  formGroup: {
-  },
   buttonProgress: {
     color: theme.palette.primary.main,
     position: 'absolute',
@@ -32,6 +30,11 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  list: {
+    [theme.breakpoints.up('md')]: {
+      padding: 0
+    }
+  }
 });
 
 const propTypes = {
@@ -52,7 +55,9 @@ class ProfileEditForm extends Component {
     return(
      <form onSubmit={handleSubmit}>
       <FormGroup className={classes.formGroup}>
-        <List component="nav">
+        <List
+          className={classes.list}
+          component="nav">
           <ListItem>
             <ListItemIcon>
               <AccountIcon />

@@ -41,10 +41,10 @@ const styles = theme => ({
   },
   dialogContent: {
     [theme.breakpoints.down('sm')]: {
-      paddingTop: 20,
-      paddingLeft: 0,
-      paddingRight: 0,
+      padding: 0,
     },
+    minWidth: 360,
+    
     paddingBottom: 0,
   },
   buttonProgress: {
@@ -89,7 +89,6 @@ class ProfileEdit extends React.Component {
       <div>
         <Dialog
           fullScreen={fullScreen}
-          maxWidth="xs"
           open
           onClose={this.handleClose}
           aria-labelledby="responsive-dialog-title"
@@ -137,10 +136,6 @@ class ProfileEdit extends React.Component {
             </DialogTitle>
           </Hidden>
           <DialogContent className={classes.dialogContent}>
-            <DialogContentText>
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText>
             <ProfileEditForm onSubmit={this.handleSubmit} />
           </DialogContent>
           <Hidden smDown>
