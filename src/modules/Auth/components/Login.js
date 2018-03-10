@@ -12,6 +12,7 @@ import LoginForm from './LoginForm';
 import Snackbar from '../../../components/Snackbar';
 
 import { logIn as logInUser, reset } from '../AuthActions';
+import { showSnackbar } from '../../Layout/LayoutActions';
 
 const styles = theme => ({
   root: {
@@ -41,6 +42,7 @@ const propTypes = {
   reset: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  showSnackbar: PropTypes.func.isRequired,
 };
 
 class Login extends Component {
@@ -49,11 +51,10 @@ class Login extends Component {
   }
 
   render() {
-    const { classes, reset } = this.props;
+    const { classes, reset, snackbarMessage, showSnackbar } = this.props;
     const { isLoading, isAuthenticated, message } = this.props.auth;
     const { from } = this.props.location.state || { from: { pathname: '/'} };
     const { redirectMessage } = this.props.location;
-    const snackbarMessage = message || redirectMessage;
 
     if (isAuthenticated) {
       return <Redirect to={from} />;
@@ -70,25 +71,20 @@ class Login extends Component {
             Forgot your password?
           </Typography>
         </TabContainer>
-        {
-          snackbarMessage &&
-          <Snackbar
-            message={snackbarMessage}
-            reset={reset}
-          />
-        }
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  snackbarMessage: state.layout.page.snackbarMessage,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   logInUser,
-  reset
+  reset,
+  showSnackbar
 }, dispatch);
 
 Login.propTypes = propTypes;

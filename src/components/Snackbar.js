@@ -25,13 +25,15 @@ class AppSnackbar extends Component {
   };
   
   handleClose = (event, reason) => {
-    this.props.reset();
     
     if (reason === 'clickaway') {
       return;
     }
 
-    this.setState({ open: false });
+    if (this.refs.snackbar) {
+      this.setState({ open: false });
+      this.props.reset();
+    }
   };
 
   render() {
@@ -40,11 +42,12 @@ class AppSnackbar extends Component {
     return (
       <div>
         <Snackbar
+          ref="snackbar"
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
           }}
-          open={this.state.open}
+          open={this.props.isOpen}
           autoHideDuration={6000}
           onClose={this.handleClose}
           SnackbarContentProps={{

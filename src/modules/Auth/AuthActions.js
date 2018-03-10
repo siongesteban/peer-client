@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { push } from 'react-router-redux'
 
 import { setAuthorizationToken } from './AuthUtils';
+import { setSnackbarMessage } from '../Layout/LayoutActions';
 import secret from '../../secret';
 import store from '../../store';
 
@@ -80,7 +81,8 @@ export const logIn = data => {
           message = 'The email or password is incorrect.';
         }
 
-        dispatch(loginFailure(message));
+        dispatch(loginFailure());
+        dispatch(setSnackbarMessage(message));
       });
   };
 }

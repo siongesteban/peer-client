@@ -1,4 +1,9 @@
-import { TOGGLE_DRAWER, SWITCH_PAGE } from './LayoutActions';
+import {
+  TOGGLE_DRAWER,
+  SWITCH_PAGE,
+  SET_SNACKBAR_MESSAGE,
+  SHOW_SNACKBAR,
+} from './LayoutActions';
 import { DRAWER_WIDTH } from './LayoutConstants';
 
 const initialPath = window.location.pathname;
@@ -9,8 +14,10 @@ const initialState = {
     width: DRAWER_WIDTH
   },
   page: {
-    current: initialPath === '/' ? 'home' : initialPath.substr(1)
-  }
+    current: initialPath === '/' ? 'home' : initialPath.substr(1),
+    snackbarMessage: null,
+    snackbarIsVisible: false,
+  },
 }
 
 const LayoutReducer = (state = initialState, action) => {
@@ -26,7 +33,24 @@ const LayoutReducer = (state = initialState, action) => {
       return {
         ...state,
         page: {
+          ...state.page,
           current: action.pageName
+        }
+      };
+    case SET_SNACKBAR_MESSAGE: 
+      return {
+        ...state,
+        page: {
+          snackbarMessage: action.message,
+          snackbarIsVisible: false,
+        }
+      };
+    case SHOW_SNACKBAR:
+      return {
+        ...state,
+        page: {
+          ...state.page,
+          snackbarIsVisible: true
         }
       };
     default:

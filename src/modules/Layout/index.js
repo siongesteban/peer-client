@@ -5,6 +5,7 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Reboot from 'material-ui/Reboot';
@@ -19,6 +20,10 @@ import Discussions from '../../views/Discussions';
 import User from '../User';
 import Login from '../Auth/components/Login';
 import Signup from '../Auth/components/Signup';
+
+import Snackbar from '../../components/Snackbar';
+
+import { setSnackbarMessage, showSnackbar } from './LayoutActions';
 
 var customTheme = createMuiTheme({
   palette: {
@@ -43,26 +48,53 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
       <Component {...props} />
     </Layout>
   )} />
-)
-const PrivateAppRoute = ({ component: Component, layout: Layout, ...rest }) => (
-  <Route {...rest} render={props => (
-    localStorage.token
-    ? <Layout>
-        <Component {...props} />
-      </Layout>
-    : <Redirect
-        to={{
-          pathname: '/login',
-          state: {
-            from: props.location
-          },
-          redirectMessage: 'Please log in.'
-        }}
-      />
-  )} />
-)
+);
+
+class PrivateAppRoute extends Component {
+  render() {
+    const {
+      setSnackbarMessage,
+      component: Component,
+      layout: Layout,
+      ...rest
+    } = this.props;
+
+    if (!localStorage.token) {
+      setSnackbarMessage('Please log in.');
+    }
+
+    return(
+      <Route {...rest} render={props => (
+        localStorage.token
+        ? <Layout>
+            <Component {...props} />
+          </Layout>
+        : <Redirect
+            to={{
+              pathname: '/login',
+              state: {
+                from: props.location
+              }
+            }}
+          />
+      )} />
+    );
+  }
+}
+
+const mapDispatchToPropss = dispatch => bindActionCreators({
+  setSnackbarMessage
+}, dispatch);
+
+PrivateAppRoute = connect(null, mapDispatchToPropss)(PrivateAppRoute);
 
 class Layout extends Component {
+  componentDidUpdate() {
+    if (this.props.snackbarMessage) {
+      this.props.showSnackbar();
+    }
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={customTheme}>
@@ -108,16 +140,31 @@ class Layout extends Component {
 
           <Route path="*" render={() => <p>You lost, nigga?</p>} />
         </Switch>
+        {
+          this.props.snackbarIsVisible &&
+          <Snackbar
+            isOpen={this.props.snackbarIsVisible}
+            message={this.props.snackbarMessage}
+            reset={this.props.setSnackbarMessage}
+          />
+        }
       </MuiThemeProvider>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  snackbarMessage: state.layout.page.snackbarMessage,
+  snackbarIsVisible: state.layout.page.snackbarIsVisible,
 });
 
-Layout = connect(mapStateToProps)(Layout);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setSnackbarMessage,
+  showSnackbar
+}, dispatch);
+
+Layout = connect(mapStateToProps, mapDispatchToProps)(Layout);
 Layout = withRouter(Layout);
 
 export default Layout;

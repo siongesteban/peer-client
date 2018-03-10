@@ -47,7 +47,6 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        message: action.message,
       };
     case SIGNUP_REQUEST:
       return {
