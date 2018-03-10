@@ -1,0 +1,39 @@
+{
+  "name": "stdnt-io-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "classnames": "^2.2.5",
+    "color": "^3.0.0",
+    "history": "^4.7.2",
+    "jsonwebtoken": "^8.2.0",
+    "material-ui": "^1.0.0-beta.33",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-facebook-login": "^4.0.1",
+    "react-fontawesome": "^1.6.1",
+    "react-google-login": "^3.0.4",
+    "react-masonry-component": "^6.0.2",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts": "1.1.1",
+    "react-speed-dial": "^0.4.7",
+    "react-swipeable-views": "^0.12.13",
+    "react-text-truncate": "^0.12.1",
+    "redux": "^3.7.2",
+    "redux-form": "^7.3.0",
+    "redux-form-material-ui": "^5.0.0-beta.2",
+    "redux-thunk": "^2.2.0",
+    "resource-router-middleware": "^0.6.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

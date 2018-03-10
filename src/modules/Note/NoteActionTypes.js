@@ -1,0 +1,7 @@
+export const TOGGLE_NOTE = 'note/TOGGLE_NOTE';
+export const GET_NOTES_FAILED = 'note/GET_NOTES_FAILED';
+export const GET_NOTES_LOADING = 'note/GET_NOTES_LOADING';
+export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
+export const GET_NOTE_BY_ID_FAILED = 'note/GET_NOTE_BY_ID_FAILED';
+export const GET_NOTE_BY_ID_LOADING = 'note/GET_NOTE_BY_ID_LOADING';
+export const GET_NOTE_BY_ID_SUCCESS = 'note/GET_NOTE_BY_ID_SUCCESS';
