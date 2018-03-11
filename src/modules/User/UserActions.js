@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import secret from '../../secret';
 import { setUser } from '../Auth/AuthActions';
+import { setSnackbarMessage } from '../Layout/LayoutActions';
 
 export const UPDATE_USER_REQUEST = 'user/UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'user/UPDATE_USER_SUCCESS';
@@ -21,17 +22,15 @@ const updateUserRequest = () => {
   };
 };
 
-const updateUserSuccess = message => {
+const updateUserSuccess = () => {
   return {
-    type: UPDATE_USER_SUCCESS,
-    message
+    type: UPDATE_USER_SUCCESS
   };
 };
 
-const updateUserFailure = message => {
+const updateUserFailure = () => {
   return {
-    type: UPDATE_USER_FAILURE,
-    message
+    type: UPDATE_USER_FAILURE
   };
 };
 
@@ -45,11 +44,17 @@ export const updateUser = (id, data) => {
         console.log(`New Token: ${res.data.newToken}`);
         dispatch(reset());
 
-        dispatch(updateUserSuccess(res.data.message));
+        const message = res.data.message;
+
+        dispatch(updateUserSuccess(message));
         dispatch(setUser(res.data.newToken));
+        dispatch(setSnackbarMessage(message));
       })
       .catch(err => {
-        dispatch(updateUserFailure(err.response.data.message));
+        const message = err.response.data.message;
+
+        dispatch(updateUserFailure(message));
+        dispatch(setSnackbarMessage(message));
       });
   }
 }

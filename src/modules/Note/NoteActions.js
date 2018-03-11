@@ -3,6 +3,7 @@ import axios from 'axios';
 import { PRIMARY_COLOR } from '../Layout/LayoutConstants';
 import { updateThemeColor } from '../Layout/LayoutUtils';
 import secret from '../../secret';
+import { setSnackbarMessage } from '../Layout/LayoutActions';
 
 import {
   TOGGLE_NOTE,
@@ -96,6 +97,7 @@ export const getNoteById = (id) => {
       })
       .catch(() => {
         dispatch(getNoteByIdFailed(true));
+        dispatch(setSnackbarMessage('Note not found.'));
       });
   }
 }

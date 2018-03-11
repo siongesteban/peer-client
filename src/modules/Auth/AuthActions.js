@@ -96,7 +96,7 @@ export const logOut = () => {
 
 const signupRequest = () => {
   return {
-    type: SIGNUP_REQUEST,
+    type: SIGNUP_REQUEST
   };
 };
 
@@ -106,10 +106,9 @@ export const signupSuccess = () => {
   };
 };
 
-export const signupFailure = message => {
+export const signupFailure = () => {
   return {
-    type: SIGNUP_FAILURE,
-    message,
+    type: SIGNUP_FAILURE
   };
 };
 
@@ -121,10 +120,16 @@ export const signUp = data => {
       .then(res => {
         dispatch(reset());
         dispatch(signupSuccess());
+        dispatch(setSnackbarMessage(
+          'Your account has been created. Please log in.'
+        ));
       })
       .catch(err => {
+        const message = err.response.data.message;
+
         dispatch(reset());
-        dispatch(signupFailure(err.response.data.message));
+        dispatch(signupFailure());
+        dispatch(setSnackbarMessage(message));
       });
   };
 };

@@ -9,7 +9,6 @@ import Typography from 'material-ui/Typography';
 
 import TabContainer from '../../../components/TabContainer';
 import SignupForm from './SignupForm';
-import Snackbar from '../../../components/Snackbar';
 
 import { signUp as signUpUser, reset } from '../AuthActions';
 
@@ -48,12 +47,11 @@ class Signup extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isLoading, successful, message } = this.props.auth;
+    const { isLoading, successful } = this.props.auth;
 
     if (successful) {
       return <Redirect to={{
-        pathname: '/login',
-        redirectMessage: 'You account has been created. Please log in.'
+        pathname: '/login'
       }} />;
     }
 
@@ -68,13 +66,6 @@ class Signup extends Component {
             Forgot your password?
           </Typography>
         </TabContainer>
-        {
-          message &&
-          <Snackbar
-            message={message}
-            reset={() => this.props.reset()}
-          />
-        }
       </div>
     );
   }

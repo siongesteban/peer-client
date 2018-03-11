@@ -24,21 +24,18 @@ const UserReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         successful: true,
-        message: action.message
       };
     case UPDATE_USER_FAILURE:
       return {
         ...state,
         isLoading: false,
         failed: true,
-        message: action.message
       };
     case RESET:
       return {
         ...state,
         failed: false,
         successful: false,
-        message: null
       };
     default:
       return state;

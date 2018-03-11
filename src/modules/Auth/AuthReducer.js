@@ -31,7 +31,6 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         successful: false,
-        message: null,
       };
     case LOGIN_REQUEST:
       return {
@@ -63,7 +62,6 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        message: action.message
       };
     default:
       return state;

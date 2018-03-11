@@ -9,7 +9,6 @@ import Typography from 'material-ui/Typography';
 
 import TabContainer from '../../../components/TabContainer';
 import LoginForm from './LoginForm';
-import Snackbar from '../../../components/Snackbar';
 
 import { logIn as logInUser, reset } from '../AuthActions';
 import { showSnackbar } from '../../Layout/LayoutActions';
@@ -39,10 +38,8 @@ const styles = theme => ({
 const propTypes = {
   classes: PropTypes.object.isRequired,
   logInUser: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  showSnackbar: PropTypes.func.isRequired,
 };
 
 class Login extends Component {
@@ -51,10 +48,9 @@ class Login extends Component {
   }
 
   render() {
-    const { classes, reset, snackbarMessage, showSnackbar } = this.props;
-    const { isLoading, isAuthenticated, message } = this.props.auth;
+    const { classes } = this.props;
+    const { isLoading, isAuthenticated } = this.props.auth;
     const { from } = this.props.location.state || { from: { pathname: '/'} };
-    const { redirectMessage } = this.props.location;
 
     if (isAuthenticated) {
       return <Redirect to={from} />;

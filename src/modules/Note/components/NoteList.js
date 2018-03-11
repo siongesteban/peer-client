@@ -13,7 +13,6 @@ import Masonry from 'react-masonry-component';
 
 import Note from './Note';
 import NoteDetail from './NoteDetail';
-import Snackbar from '../../../components/Snackbar';
 
 import { getNotes } from '../NoteActions';
 
@@ -57,7 +56,6 @@ class NoteList extends Component {
   render() {
     const { classes } = this.props;
     const { all, isLoading, loaded } = this.props.notes;
-    const { redirectMessage } = this.props.location;
 
     if (!loaded && isLoading) {
       return (
@@ -101,10 +99,6 @@ class NoteList extends Component {
               ))}
             </Grid>
           : 'Empty'
-        }
-        {
-          redirectMessage &&
-          <Snackbar message={redirectMessage} reset={() => null} />
         }
         <Button
           variant="fab"

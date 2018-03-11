@@ -25,6 +25,7 @@ export const switchPage = () => {
   }
 
   return dispatch => {
+    dispatch(setSnackbarMessage());
     dispatch({
       type: SWITCH_PAGE,
       pageName

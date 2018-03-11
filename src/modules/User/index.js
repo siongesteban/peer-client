@@ -11,7 +11,6 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import Grid from 'material-ui/Grid';
 import Card from 'material-ui/Card';
 
-import Snackbar from '../../components/Snackbar';
 import Me from './components/Me';
 import ProfileEdit from './components/ProfileEdit';
 
@@ -62,7 +61,7 @@ class User extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { message } = this.props.user;
+    
     return (
       <div>
         <Grid
@@ -107,13 +106,6 @@ class User extends React.Component {
           </Grid>
         </Grid>
         <Route path="/me/edit-profile" component={ProfileEdit} />
-        {
-          message &&
-          <Snackbar
-            message={message}
-            reset={this.props.reset}
-          />
-        }
       </div>
     );
   }

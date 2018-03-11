@@ -146,8 +146,7 @@ class NoteDetail extends Component {
             </div>
           : <Redirect
               to={{
-                pathname: '/notes',
-                redirectMessage: 'Note not found.'
+                pathname: '/notes'
               }}
             />
         )}
