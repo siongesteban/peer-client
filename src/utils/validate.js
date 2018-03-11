@@ -14,6 +14,13 @@ const validate = (values, fields) => {
     errors.email = 'Invalid email address';
   }
 
+  if (
+    values.newPassword &&
+    values.newPassword !== values.confirmPassword
+  ) {
+    errors.confirmPassword = 'New passwords do not match'
+  }
+
   return errors;
 };
 

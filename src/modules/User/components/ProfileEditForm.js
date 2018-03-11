@@ -85,6 +85,7 @@ class ProfileEditForm extends Component {
             </ListItemIcon>
             <Field
               name="email"
+              type="email"
               component={TextField}
               placeholder="Email"
               fullWidth

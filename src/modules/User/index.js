@@ -105,7 +105,10 @@ class User extends React.Component {
             </Card>
           </Grid>
         </Grid>
-        <Route path="/me/edit-profile" component={ProfileEdit} />
+        <Route
+          path="/me/edit-profile"
+          component={ProfileEdit}
+        />
       </div>
     );
   }

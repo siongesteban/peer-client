@@ -70,6 +70,7 @@ class SignupForm extends Component {
             fullWidth
             margin="normal"
             name="email"
+            type="email"
             label="Email Address"
           />
           <Field

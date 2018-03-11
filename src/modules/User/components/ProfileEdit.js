@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux'
@@ -9,6 +10,7 @@ import Button from 'material-ui/Button';
 
 import ResponsiveDialog from '../../../components/ResponsiveDialog';
 import ProfileEditForm from './ProfileEditForm';
+import PasswordUpdate from './PasswordUpdate';
 
 import { updateUser, reset } from '../UserActions';
 
@@ -22,6 +24,10 @@ const propTypes = {
 };
 
 class ProfileEdit extends React.Component {
+  state = {
+    passwordDialogisOpen: false,
+  };
+
   handleSubmit = values => {
     this.props.updateUser(this.props.auth.user.id, values);
     this.handleClose();
@@ -32,25 +38,41 @@ class ProfileEdit extends React.Component {
     this.props.goBack();
   };
 
+  togglePasswordDialog = () => {
+    this.setState({
+      passwordDialogisOpen: !this.state.passwordDialogisOpen
+    });
+  }
+
   render() {
     const { submitForm } = this.props;
     const { isLoading } = this.props.user;
+    const { passwordDialogisOpen } = this.state;
 
     return (
-      <ResponsiveDialog
-        title={'Edit Profile'}
-        isLoading={isLoading}
-        handleClose={this.handleClose}
-        submitForm={submitForm}
-      >
-        <ProfileEditForm onSubmit={this.handleSubmit} />
-        <Button
-          style={{ justifyContent: 'left' }}
-          fullWidth
+      <div>
+        <ResponsiveDialog
+          title={'Edit Profile'}
+          isLoading={isLoading}
+          handleClose={this.handleClose}
+          submitForm={submitForm}
         >
-          Update Password
-        </Button>
-      </ResponsiveDialog>
+          <ProfileEditForm onSubmit={this.handleSubmit} />
+          <Button
+            style={{ justifyContent: 'left' }}
+            fullWidth
+            onClick={this.togglePasswordDialog}
+          >
+            Update Password
+          </Button>
+        </ResponsiveDialog>
+        {
+          passwordDialogisOpen &&
+          <PasswordUpdate
+            handleClose={this.togglePasswordDialog}
+          />
+        }
+      </div>
     );
   }
 }
@@ -69,5 +91,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 ProfileEdit.propTypes = propTypes;
 ProfileEdit = connect(mapStateToProps, mapDispatchToProps)(ProfileEdit);
+ProfileEdit = withRouter(ProfileEdit);
 
 export default ProfileEdit;
