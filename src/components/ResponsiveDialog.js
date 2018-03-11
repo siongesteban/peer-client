@@ -39,7 +39,6 @@ const styles = theme => ({
     paddingBottom: 0,
   },
   buttonProgress: {
-    color: '#fff',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -106,6 +105,7 @@ class ProfileEdit extends React.Component {
                   isLoading &&
                   <CircularProgress
                     className={classes.buttonProgress}
+                    style={{ color: '#fff' }}
                     size={24}
                   />
                 }
@@ -129,13 +129,23 @@ class ProfileEdit extends React.Component {
             >
               Cancel
             </Button>
-            <Button
-              autoFocus
-              color="primary"
-              onClick={submitForm}
-            >
-              Save
-            </Button>
+            <div className={classes.wrapper}>
+              <Button
+                autoFocus
+                color="primary"
+                disabled={isLoading}
+                onClick={submitForm}
+              >
+                Save
+              </Button>
+              {
+                isLoading &&
+                <CircularProgress
+                  className={classes.buttonProgress}
+                  size={24}
+                />
+              }
+            </div>
           </DialogActions>
         </Hidden>
       </Dialog>

@@ -22,10 +22,15 @@ const propTypes = {
 };
 
 class PasswordUpdate extends React.Component {
+  componentDidUpdate() {
+    if (this.props.user.successful) {
+      this.props.handleClose();
+      this.props.reset();
+    }
+  }
+
   handleSubmit = values => {
     this.props.updateUser(this.props.auth.user.id, values);
-    this.handleClose();
-    reset();
   }
 
   render() {
@@ -46,6 +51,7 @@ class PasswordUpdate extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   user: state.user,
 });
 

@@ -31,7 +31,6 @@ class ProfileEdit extends React.Component {
   handleSubmit = values => {
     this.props.updateUser(this.props.auth.user.id, values);
     this.handleClose();
-    reset();
   }
 
   handleClose = () => {

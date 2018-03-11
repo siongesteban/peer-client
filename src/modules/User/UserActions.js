@@ -38,22 +38,23 @@ export const updateUser = (id, data) => {
   return dispatch => {
     dispatch(updateUserRequest());
 
-    console.log('id: ', id);
     axios.patch(`${secret.API_URL}/users/${id}`, data)
       .then(res => {
-        console.log(`New Token: ${res.data.newToken}`);
         dispatch(reset());
 
         const message = res.data.message;
 
-        dispatch(updateUserSuccess(message));
-        dispatch(setUser(res.data.newToken));
+        if (!data.newPassword) {
+          dispatch(setUser(res.data.newToken));
+        }
+
+        dispatch(updateUserSuccess());
         dispatch(setSnackbarMessage(message));
       })
       .catch(err => {
         const message = err.response.data.message;
 
-        dispatch(updateUserFailure(message));
+        dispatch(updateUserFailure());
         dispatch(setSnackbarMessage(message));
       });
   }
