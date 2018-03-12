@@ -1,3 +1,5 @@
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 import {
   TOGGLE_NOTE,
   GET_NOTES_FAILED,
@@ -170,10 +172,15 @@ const notesInitialState = {
   all: [],
   failed: false,
   isLoading: false,
-  loaded: false
-}
+  isLoaded: false,
+};
 
-export const notesReducer = (state = notesInitialState, action) => {
+const persistConfig = {
+  key: 'notes',
+  storage: storage,
+};
+
+export const notesReducer = persistReducer(persistConfig, (state = notesInitialState, action) => {
   switch (action.type) {
     case GET_NOTES_FAILED:
       return {
@@ -189,12 +196,12 @@ export const notesReducer = (state = notesInitialState, action) => {
       return {
         ...state,
         all: action.notes,
-        loaded: true
+        isLoaded: true
       };
     default:
       return state;
   }
-};
+});
 
 const noteInitialState = {
   item: {},

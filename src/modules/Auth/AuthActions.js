@@ -5,7 +5,6 @@ import { push } from 'react-router-redux'
 import { setAuthorizationToken } from './AuthUtils';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
 import secret from '../../secret';
-import store from '../../store';
 
 export const SET_USER = 'auth/SET_USER';
 export const RESET = 'auth/RESET';
@@ -90,7 +89,7 @@ export const logIn = data => {
 export const logOut = () => {
   return dispatch => {
     dispatch(setUser(false));
-    store.dispatch(push('/login'));
+    dispatch(push('/login'));
   }
 }
 

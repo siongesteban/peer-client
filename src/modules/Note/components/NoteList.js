@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import { CircularProgress } from 'material-ui/Progress';
@@ -47,17 +48,33 @@ const propTypes = {
 };
 
 class NoteList extends Component {
+  state = {
+    canConnect: true,
+  };
+
   componentDidMount() {
-    if (!this.props.notes.loaded) {
-      this.props.getNotes();
+    if (!this.props.notes.isLoaded) {
+      if (window.navigator.onLine) {
+        this.props.getNotes();
+      } else {
+        this.setState({ canConnect: false });
+      }
     }
+  }
+
+  handleRefresh() {
+    this.props.getNotes();
   }
 
   render() {
     const { classes } = this.props;
-    const { all, isLoading, loaded } = this.props.notes;
+    const { all, isLoading } = this.props.notes;
 
-    if (!loaded && isLoading) {
+    if (!this.state.canConnect) {
+      return <Typography>Can't connect right now.</Typography>;
+    }
+
+    if (isLoading) {
       return (
         <Grid
           container

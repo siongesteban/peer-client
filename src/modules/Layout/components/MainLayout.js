@@ -44,7 +44,7 @@ class MainLayout extends Component {
           <TopNav />
           <SideNav />
           <main className={classes.content}>
-              {children}
+            {children}
           </main>
           <BottomNav />
         </div>

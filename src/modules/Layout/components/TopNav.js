@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Offline, Online } from 'react-detect-offline';
 
 import { withStyles } from 'material-ui/styles';
 import Hidden from 'material-ui/Hidden';
@@ -11,7 +12,12 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
+import CheckIcon from 'material-ui-icons/CheckCircle';
+import ErrorIcon from 'material-ui-icons/Error';
+import red from 'material-ui/colors/red';
+import orange from 'material-ui/colors/orange';
 
 import { toggleDrawer } from '../LayoutActions';
 import { DRAWER_WIDTH } from '../LayoutConstants';
@@ -48,12 +54,12 @@ const styles = theme => ({
   title: {
     flex: 1,
   },
-  accountIcon: {
-    marginRight: 6,
+  offlineIndicator: {
+    background: '#fff !important'
   },
-  hide: {
-    display: 'none',
-  },
+  offlineIndicatorIcon: {
+    marginRight: theme.spacing.unit,
+  }
 });
 
 const propTypes = {
@@ -74,7 +80,7 @@ class TopNav extends Component {
           )
         }
       >
-        <Toolbar disableGutters={!isOpen}>
+        <Toolbar disableGutters>
           <Hidden smDown>
             <IconButton
               color="inherit"
@@ -102,6 +108,17 @@ class TopNav extends Component {
           >
             stdnt.io
           </Typography>
+          <Offline>
+            <Button
+              className={classes.offlineIndicator}
+              size="small"
+              color="secondary"
+              disabled
+              style={{ color: '#EF5350' }}
+            >
+              <CheckIcon className={classes.offlineIndicatorIcon} /> Offline
+            </Button>
+          </Offline>
         </Toolbar>
       </AppBar>
     );
