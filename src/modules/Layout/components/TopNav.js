@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Offline, Online } from 'react-detect-offline';
+import { Offline } from 'react-detect-offline';
 
 import { withStyles } from 'material-ui/styles';
 import Hidden from 'material-ui/Hidden';
@@ -15,9 +15,6 @@ import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
 import CheckIcon from 'material-ui-icons/CheckCircle';
-import ErrorIcon from 'material-ui-icons/Error';
-import red from 'material-ui/colors/red';
-import orange from 'material-ui/colors/orange';
 
 import { toggleDrawer } from '../LayoutActions';
 import { DRAWER_WIDTH } from '../LayoutConstants';

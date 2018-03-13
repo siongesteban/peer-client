@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux'
 import { submit } from 'redux-form'
-
-import Button from 'material-ui/Button';
 
 import ResponsiveDialog from '../../../components/ResponsiveDialog';
 import PasswordUpdateForm from './PasswordUpdateForm';

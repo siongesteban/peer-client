@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 
 import MainLayout from './components/MainLayout';
 import AuthLayout from './components/AuthLayout';
@@ -21,9 +22,7 @@ import User from '../User';
 import Login from '../Auth/components/Login';
 import Signup from '../Auth/components/Signup';
 
-import Snackbar from '../../components/Snackbar';
-
-import { setSnackbarMessage, showSnackbar } from './LayoutActions';
+import { setSnackbarMessage } from './LayoutActions';
 
 var customTheme = createMuiTheme({
   palette: {
@@ -89,12 +88,6 @@ const mapDispatchToPropss = dispatch => bindActionCreators({
 PrivateAppRoute = connect(null, mapDispatchToPropss)(PrivateAppRoute);
 
 class Layout extends Component {
-  componentDidUpdate() {
-    if (this.props.snackbarMessage) {
-      this.props.showSnackbar();
-    }
-  }
-
   render() {
     return (
       <MuiThemeProvider theme={customTheme}>
@@ -140,31 +133,11 @@ class Layout extends Component {
 
           <Route path="*" render={() => <p>You lost, nigga?</p>} />
         </Switch>
-        {
-          this.props.snackbarIsVisible &&
-          <Snackbar
-            isOpen={this.props.snackbarIsVisible}
-            message={this.props.snackbarMessage}
-            reset={this.props.setSnackbarMessage}
-          />
-        }
       </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  snackbarMessage: state.layout.page.snackbarMessage,
-  snackbarIsVisible: state.layout.page.snackbarIsVisible,
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  setSnackbarMessage,
-  showSnackbar
-}, dispatch);
-
-Layout = connect(mapStateToProps, mapDispatchToProps)(Layout);
 Layout = withRouter(Layout);
 
 export default Layout;

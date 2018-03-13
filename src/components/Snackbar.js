@@ -42,6 +42,7 @@ class AppSnackbar extends Component {
     return (
       <div>
         <Snackbar
+          className={this.props.className}
           ref="snackbar"
           anchorOrigin={{
             vertical: 'bottom',

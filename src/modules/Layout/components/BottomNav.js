@@ -20,6 +20,7 @@ const styles = theme => ({
     position: 'fixed',
     bottom: 0,
     boxShadow: theme.shadows[1],
+    zIndex: theme.zIndex.drawer + 1,
   },
   bottomNavAction: {
     [theme.breakpoints.down('sm')]: {

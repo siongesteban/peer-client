@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
 import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';
 import List, { ListItem, ListItemIcon } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import LockIcon from 'material-ui-icons/Lock';
 
 import validateFields from '../../../utils/validate';
