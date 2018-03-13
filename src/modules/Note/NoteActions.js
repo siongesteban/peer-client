@@ -12,7 +12,9 @@ import {
   GET_NOTES_SUCCESS,
   GET_NOTE_BY_ID_FAILED,
   GET_NOTE_BY_ID_LOADING,
-  GET_NOTE_BY_ID_SUCCESS } from './NoteActionTypes';
+  GET_NOTE_BY_ID_SUCCESS,
+  RESET_CURRENT_NOTE
+} from './NoteActionTypes';
 
 export const toggleNote = (noteColor) => {
   let themeColor = PRIMARY_COLOR;
@@ -101,3 +103,9 @@ export const getNoteById = (id) => {
       });
   }
 }
+
+export const resetCurrentNote = () => {
+  return {
+    type: RESET_CURRENT_NOTE
+  };
+};

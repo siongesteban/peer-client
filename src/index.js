@@ -13,6 +13,8 @@ import App from './App';
 const { store, persistor } = configureStore();
 const token = localStorage.getItem('token');
 
+global.store = store;
+
 if (token) {
   setAuthorizationToken(token);
   store.dispatch(setUser(token));

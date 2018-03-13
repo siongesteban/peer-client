@@ -5,3 +5,4 @@ export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
 export const GET_NOTE_BY_ID_FAILED = 'note/GET_NOTE_BY_ID_FAILED';
 export const GET_NOTE_BY_ID_LOADING = 'note/GET_NOTE_BY_ID_LOADING';
 export const GET_NOTE_BY_ID_SUCCESS = 'note/GET_NOTE_BY_ID_SUCCESS';
+export const RESET_CURRENT_NOTE = 'note/RESET_CURRENT_NOTE';

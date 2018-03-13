@@ -18,7 +18,7 @@ import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
-import { toggleNote, getNoteById, getNoteByIdFailed } from '../NoteActions';
+import { toggleNote, getNoteById, getNoteByIdFailed, resetCurrentNote } from '../NoteActions';
 
 const styles = theme => ({
   appBar: {
@@ -47,22 +47,27 @@ const propTypes = {
   toggleNote: PropTypes.func.isRequired,
   getNoteById: PropTypes.func.isRequired,
   getNoteByIdFailed: PropTypes.func.isRequired,
+  resetCurrentNote: PropTypes.func.isRequired,
 };
 
 class NoteDetail extends Component {
   componentWillMount() {
     this.props.getNoteById(this.props.match.params.id);
-    this.props.toggleNote(this.props.note.color);
+  }
+
+  componentDidUpdate() {
+    this.props.toggleNote(this.props.note.selected.color);
   }
 
   handleClose = () => {
     this.props.close();
     this.props.toggleNote();
+    this.props.resetCurrentNote();
   };
 
   render() {
     const { fullScreen, classes } = this.props;
-    const { item, isLoading, failed } = this.props.note;
+    const { selected, isLoading, failed } = this.props.note;
 
     if (failed) {
       this.props.getNoteByIdFailed(false);
@@ -85,7 +90,7 @@ class NoteDetail extends Component {
                   <Hidden mdUp>
                     <AppBar
                       className={classes.appBar}
-                      style={{ background: item.color }}
+                      style={{ background: selected.color || '#fff' }}
                       position="static"
                     >
                       <Toolbar>
@@ -101,20 +106,20 @@ class NoteDetail extends Component {
                   </Hidden>
                   <DialogContent
                     className={classes.dialogContent}
-                    style={{ background: item.color }}
+                    style={{ background: selected.color }}
                   >
                     <Typography
                       variant="display2"
                       gutterBottom
                     >
-                      {item.title}
+                      {selected.title}
                     </Typography>
                     <Typography gutterBottom>
-                      {item.text}
+                      {selected.text}
                     </Typography>
                     {
-                      item.collabs &&
-                      item.collabs.map(collab => (
+                      selected.collabs &&
+                      selected.collabs.map(collab => (
                         <div key={collab.author}>
                           <Divider
                             className={classes.divider}
@@ -163,7 +168,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   close: () => push('/notes'),
   toggleNote,
   getNoteById,
-  getNoteByIdFailed
+  getNoteByIdFailed,
+  resetCurrentNote,
 }, dispatch);
 
 NoteDetail.propTypes = propTypes;
