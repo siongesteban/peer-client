@@ -103,7 +103,7 @@ class TopNav extends Component {
             variant="title"
             color="inherit"
           >
-            stdnt.io
+            stdnt.io v5
           </Typography>
           <Offline>
             <Button

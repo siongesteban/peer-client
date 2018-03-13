@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import Button from 'material-ui/Button';
 
 import MainLayout from './components/MainLayout';
 import AuthLayout from './components/AuthLayout';

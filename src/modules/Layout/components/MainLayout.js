@@ -9,7 +9,6 @@ import TopNav from './TopNav';
 import SideNav from './SideNav';
 import BottomNav from './BottomNav';
 import Snackbar from '../../../components/Snackbar';
-import AppUpdateMessage from './AppUpdateMessage';
 
 import { setSnackbarMessage, showSnackbar } from '../LayoutActions';
 
@@ -53,14 +52,28 @@ const propTypes = {
 };
 
 class MainLayout extends Component {
+  state = {
+    isUpdateAvailable: false,
+  };
+
+  componentDidMount() {
+    console.log('v5');
+  }
+
   componentDidUpdate() {
     if (this.props.snackbarMessage) {
       this.props.showSnackbar();
     }
   }
 
+  handleReload = () => {
+    this.setState({ isUpdateAvailable: false });
+    window.location.reload();
+  }
+
   render() {
     const { classes, children } = this.props;
+
     return(
       <div className={classes.root}>
         <div className={classes.appFrame}>
@@ -79,7 +92,6 @@ class MainLayout extends Component {
               reset={this.props.setSnackbarMessage}
             />
           }
-          <AppUpdateMessage />
         </div>
       </div>
     );
