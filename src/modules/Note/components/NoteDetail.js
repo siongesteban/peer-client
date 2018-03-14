@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -18,7 +17,7 @@ import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
-import { toggleNote, getNoteById, getNoteByIdFailed, resetCurrentNote } from '../NoteActions';
+import { updateThemeColor } from '../../Layout/LayoutUtils';
 
 const styles = theme => ({
   appBar: {
@@ -44,132 +43,97 @@ const propTypes = {
   classes: PropTypes.object.isRequired,
   note: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
-  toggleNote: PropTypes.func.isRequired,
-  getNoteById: PropTypes.func.isRequired,
-  getNoteByIdFailed: PropTypes.func.isRequired,
-  resetCurrentNote: PropTypes.func.isRequired,
 };
 
 class NoteDetail extends Component {
-  componentWillMount() {
-    this.props.getNoteById(this.props.match.params.id);
-  }
-
-  componentDidUpdate() {
-    this.props.toggleNote(this.props.note.selected.color);
+  componentDidMount() {
+    updateThemeColor(this.props.note.color);
   }
 
   handleClose = () => {
     this.props.close();
-    this.props.toggleNote();
-    this.props.resetCurrentNote();
   };
 
   render() {
-    const { fullScreen, classes } = this.props;
-    const { selected, isLoading, failed } = this.props.note;
-
-    if (failed) {
-      this.props.getNoteByIdFailed(false);
-    }
+    const { fullScreen, classes, note } = this.props;
     
     return (
-      <Route
-        path="/notes/:id"
-        render={() => (
-          !failed
-          ? <div>
-              {
-                !isLoading &&
-                <Dialog
-                  fullScreen={fullScreen}
-                  open
-                  onClose={this.handleClose}
-                  aria-labelledby="responsive-dialog-title"
+      <Dialog
+        fullScreen={fullScreen}
+        open
+        onClose={this.handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <Hidden mdUp>
+          <AppBar
+            className={classes.appBar}
+            style={{ background: note.color || '#fff' }}
+            position="static"
+          >
+            <Toolbar>
+              <IconButton
+                className={classes.menuButton}
+                aria-label="Menu"
+                onClick={this.handleClose}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+        </Hidden>
+        <DialogContent
+          className={classes.dialogContent}
+          style={{ background: note.color }}
+        >
+          <Typography
+            variant="display2"
+            gutterBottom
+          >
+            {note.title}
+          </Typography>
+          <Typography gutterBottom>
+            {note.text}
+          </Typography>
+          {
+            note.collabs &&
+            note.collabs.map(collab => (
+              <div key={collab.author}>
+                <Divider
+                  className={classes.divider}
+                />
+                <Typography
+                  variant="body2"
+                  gutterBottom
                 >
-                  <Hidden mdUp>
-                    <AppBar
-                      className={classes.appBar}
-                      style={{ background: selected.color || '#fff' }}
-                      position="static"
-                    >
-                      <Toolbar>
-                        <IconButton
-                          className={classes.menuButton}
-                          aria-label="Menu"
-                          onClick={this.handleClose}
-                        >
-                          <ArrowBackIcon />
-                        </IconButton>
-                      </Toolbar>
-                    </AppBar>
-                  </Hidden>
-                  <DialogContent
-                    className={classes.dialogContent}
-                    style={{ background: selected.color }}
-                  >
-                    <Typography
-                      variant="display2"
-                      gutterBottom
-                    >
-                      {selected.title}
-                    </Typography>
-                    <Typography gutterBottom>
-                      {selected.text}
-                    </Typography>
-                    {
-                      selected.collabs &&
-                      selected.collabs.map(collab => (
-                        <div key={collab.author}>
-                          <Divider
-                            className={classes.divider}
-                          />
-                          <Typography
-                            variant="body2"
-                            gutterBottom
-                          >
-                            {collab.author}
-                          </Typography>
-                          <Typography className={classes.date}>
-                            Created at: January 23, 2018 11:32 AM
-                          </Typography>
-                          <Typography
-                            gutterBottom
-                            className={classes.date}
-                          >
-                            Last Update: February 03, 2018 3:58 PM
-                          </Typography>
-                          <Typography gutterBottom>
-                            {collab.text}
-                          </Typography>
-                        </div>
-                      ))
-                    }
-                  </DialogContent>
-                </Dialog>
-              }
-            </div>
-          : <Redirect
-              to={{
-                pathname: '/notes'
-              }}
-            />
-        )}
-      />
+                  {collab.author}
+                </Typography>
+                <Typography className={classes.date}>
+                  Created at: January 23, 2018 11:32 AM
+                </Typography>
+                <Typography
+                  gutterBottom
+                  className={classes.date}
+                >
+                  Last Update: February 03, 2018 3:58 PM
+                </Typography>
+                <Typography gutterBottom>
+                  {collab.text}
+                </Typography>
+              </div>
+            ))
+          }
+        </DialogContent>
+      </Dialog>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  note: state.note,
+  note: state.notes.all.filter(note => note._id === ownProps.match.params.id)[0]
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   close: () => push('/notes'),
-  toggleNote,
-  getNoteById,
-  getNoteByIdFailed,
-  resetCurrentNote,
 }, dispatch);
 
 NoteDetail.propTypes = propTypes;

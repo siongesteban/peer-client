@@ -42,7 +42,7 @@ const styles = theme => ({
 
 const propTypes = {
   classes: PropTypes.object.isRequired,
-  notes: PropTypes.object.isRequired,
+  notes: PropTypes.array.isRequired,
   location: PropTypes.object.isRequired,
   getNotes: PropTypes.func.isRequired,
 };
@@ -52,7 +52,7 @@ class NoteList extends Component {
     canConnect: true,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.notes.isLoaded) {
       if (window.navigator.onLine) {
         this.props.getNotes();
@@ -67,8 +67,8 @@ class NoteList extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { all, isLoading } = this.props.notes;
+    const { classes, notes } = this.props;
+    const { isLoading } = this.props.notes;
 
     if (!this.state.canConnect) {
       return <Typography>Can't connect right now.</Typography>;
@@ -95,12 +95,12 @@ class NoteList extends Component {
           component={NoteDetail}
         />
         {
-          all.length > 0
+          notes.length > 0
           ? <Grid
               component={Masonry}
               container
             >
-              {all.map(note => (
+              {notes.map(note => (
                 <Grid
                   key={note._id}
                   item
@@ -131,7 +131,7 @@ class NoteList extends Component {
 }
 
 const mapStateToProps = state => ({
-  notes: state.notes,
+  notes: state.notes.all,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
