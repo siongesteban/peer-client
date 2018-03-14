@@ -74,6 +74,10 @@ class Note extends Component {
                 variant="body2"
               >
                 Shared
+                {
+                  this.props.note.isPartOfCollab &&
+                  ` by ${this.props.note.parentNote.author.givenName}`
+                }
               </Typography>
             }
             <Typography

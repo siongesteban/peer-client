@@ -96,6 +96,36 @@ class NoteDetail extends Component {
           >
             {note.title}
           </Typography>
+          <Typography
+            variant="body2"
+            gutterBottom
+          >
+            {
+              this.props.note.isPartOfCollab &&
+              <Typography
+                variant="body2"
+                gutterBottom
+              >
+                {`Shared by ${note.author.givenName}`}
+              </Typography>
+            }
+          </Typography>
+          <Typography
+            gutterBottom
+            className={classes.date}
+          >
+            {
+              `Date Created: ${formatDate(note.createdAt)}`
+            }
+          </Typography>
+          <Typography
+            gutterBottom
+            className={classes.date}
+          >
+            {
+              `Last Update: ${formatDate(note.updatedAt)}`
+            }
+          </Typography>
           <Typography gutterBottom>
             {note.content}
           </Typography>
@@ -111,7 +141,7 @@ class NoteDetail extends Component {
                   gutterBottom
                 >
                   {
-                    collab.author._id !== authUserId
+                    collab.author !== authUserId
                     ? `${collab.author.givenName} ${collab.author.familyName}`
                     : 'You'
                   }
@@ -125,7 +155,7 @@ class NoteDetail extends Component {
                 >
                   {
                     collab.content &&
-                    `Last Update: ${collab.updatedAt}`
+                    `Last Update: ${formatDate(collab.updatedAt)}`
                   }
                 </Typography>
                 {
