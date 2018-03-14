@@ -18,6 +18,7 @@ import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
+import formatDate from '../../../utils/formatDate';
 
 const styles = theme => ({
   appBar: {
@@ -43,6 +44,7 @@ const propTypes = {
   classes: PropTypes.object.isRequired,
   note: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
+  authUserId: PropTypes.string.isRequired,
 };
 
 class NoteDetail extends Component {
@@ -55,8 +57,11 @@ class NoteDetail extends Component {
   };
 
   render() {
-    const { fullScreen, classes, note } = this.props;
-    
+    const { fullScreen, classes, authUserId } = this.props;
+    const note = this.props.note.isPartOfCollab
+      ? this.props.note.parentNote
+      : this.props.note;
+
     return (
       <Dialog
         fullScreen={fullScreen}
@@ -92,12 +97,12 @@ class NoteDetail extends Component {
             {note.title}
           </Typography>
           <Typography gutterBottom>
-            {note.text}
+            {note.content}
           </Typography>
           {
-            note.collabs &&
+            note.collabs.length > 0 &&
             note.collabs.map(collab => (
-              <div key={collab.author}>
+              <div key={collab._id}>
                 <Divider
                   className={classes.divider}
                 />
@@ -105,20 +110,33 @@ class NoteDetail extends Component {
                   variant="body2"
                   gutterBottom
                 >
-                  {collab.author}
+                  {
+                    collab.author._id !== authUserId
+                    ? `${collab.author.givenName} ${collab.author.familyName}`
+                    : 'You'
+                  }
                 </Typography>
                 <Typography className={classes.date}>
-                  Created at: January 23, 2018 11:32 AM
+                  Date Added: {formatDate(collab.createdAt)}
                 </Typography>
                 <Typography
                   gutterBottom
                   className={classes.date}
                 >
-                  Last Update: February 03, 2018 3:58 PM
+                  {
+                    collab.content &&
+                    `Last Update: ${collab.updatedAt}`
+                  }
                 </Typography>
-                <Typography gutterBottom>
-                  {collab.text}
-                </Typography>
+                {
+                  collab.content
+                  ? <Typography gutterBottom>
+                      {collab.content}
+                    </Typography>
+                  : <Typography gutterBottom>
+                      No content
+                    </Typography>
+                }
               </div>
             ))
           }
@@ -129,7 +147,8 @@ class NoteDetail extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  note: state.notes.all.filter(note => note._id === ownProps.match.params.id)[0]
+  note: state.notes.all.filter(note => note._id === ownProps.match.params.id)[0],
+  authUserId: state.auth.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

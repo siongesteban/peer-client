@@ -131,7 +131,7 @@ class NoteList extends Component {
 }
 
 const mapStateToProps = state => ({
-  notes: state.notes.all,
+  notes: state.notes.all
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

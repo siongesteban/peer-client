@@ -9,6 +9,8 @@ import Card, { CardContent } from 'material-ui/Card';
 import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 
+import formatDate from '../../../utils/formatDate';
+
 const styles = theme => ({
   title: {
     marginBottom: 16,
@@ -25,7 +27,10 @@ const styles = theme => ({
   },
   typography: {
     textAlign: 'left'
-  }
+  },
+  date: {
+    color: 'rgba(0, 0, 0, 0.5)',
+  },
 });
 
 const propTypes = {
@@ -35,14 +40,17 @@ const propTypes = {
 
 class Note extends Component {
   render() {
-    const { classes, note } = this.props;
+    const { classes } = this.props;
+    const note = this.props.note.isPartOfCollab
+      ? this.props.note.parentNote
+      : this.props.note;
 
     return (
       <ButtonBase
         className={classes.buttonBase}
         focusRipple
         component={Link}
-        to={`/notes/${note._id}`}
+        to={`/notes/${this.props.note._id}`}
       >
         <Card
           style={{ backgroundColor: note.color }} 
@@ -56,21 +64,24 @@ class Note extends Component {
             >
               {note.title}
             </Typography>
-            <Typography className={classNames(classes.typography)}>
-              02/12/18
+            <Typography className={classNames(classes.typography, classes.date)}>
+              {formatDate(note.updatedAt)}
             </Typography>
-            <Typography
-              className={classNames(classes.typography, classes.pos)}
-              variant="body2"
-            >
-              Shared
-            </Typography>
+            {
+              note.collabs.length > 0 &&
+              <Typography
+                className={classNames(classes.typography, classes.pos)}
+                variant="body2"
+              >
+                Shared
+              </Typography>
+            }
             <Typography
               className={classes.typography}
               component={TextTruncate}
               line={4}
               truncateText="..."
-              text={note.text}
+              text={note.content}
             >
             </Typography>
           </CardContent>
