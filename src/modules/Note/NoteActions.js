@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import secret from '../../secret';
+import { getUser } from '../Auth/AuthUtils';
 
 export const GET_NOTES_FAILURE = 'note/GET_NOTES_FAILURE';
 export const GET_NOTES_REQUEST = 'note/GET_NOTES_REQUEST';
@@ -31,6 +32,10 @@ export const getNotes = () => {
 
     axios.get(`${secret.API_URL}/notes`)
       .then(res => {
+        const notes = res.data.notes.filter(note => (
+          note._id === getUser().id
+        ));
+        
         dispatch(getNotesSuccess(res.data.notes));
       })
       .catch(() => {

@@ -24,13 +24,13 @@ const styles = theme => ({
     width: '100%',
     flexGrow: 1,
     padding: theme.spacing.unit,
-    paddingBottom: 80,
     marginTop: 56,
     [theme.breakpoints.up('md')]: {
       marginLeft: 56,
     },
     [theme.breakpoints.down('sm')]: {
       padding: 0,
+      paddingBottom: 70,
     },
   },
   snackbar: {
