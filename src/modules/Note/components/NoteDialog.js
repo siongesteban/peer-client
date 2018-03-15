@@ -67,6 +67,7 @@ class NoteDialog extends Component {
       title,
       fullScreen,
       handleClose,
+      submitForm,
       noteColor,
       children
     } = this.props;
@@ -124,7 +125,7 @@ class NoteDialog extends Component {
             </Hidden>
             <Button
               className={classes.dialogActionButtons}
-              onClick={handleClose}
+              onClick={submitForm}
             >
               Save
             </Button>

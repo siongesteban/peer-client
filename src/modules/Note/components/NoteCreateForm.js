@@ -42,7 +42,7 @@ const propTypes = {
 };
 
 const validate = values => {
-  const fields = ['givenName', 'familyName', 'email'];
+  const fields = ['title', 'content'];
   
   return validateFields(values, fields);
 };
@@ -79,7 +79,7 @@ class NoteCreateForm extends Component {
 NoteCreateForm.propTypes = propTypes;
 NoteCreateForm = withStyles(styles)(NoteCreateForm);
 NoteCreateForm = reduxForm({
-  form: 'profileEdit',
+  form: 'noteCreate',
   validate
 })(NoteCreateForm);
 

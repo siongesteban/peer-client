@@ -1,9 +1,10 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import {
-  GET_NOTES_FAILURE,
-  GET_NOTES_REQUEST,
+  NOTES_FAILURE,
+  NOTES_REQUEST,
   GET_NOTES_SUCCESS,
+  CREATE_NOTE_SUCCESS
 } from './NoteActions';
 
 const initialState = {
@@ -20,12 +21,13 @@ const persistConfig = {
 
 export const notesReducer = persistReducer(persistConfig, (state = initialState, action) => {
   switch (action.type) {
-    case GET_NOTES_REQUEST:
+    case NOTES_REQUEST:
       return {
         ...state,
         isLoading: true,
+        failed: false,
       };
-    case GET_NOTES_FAILURE:
+    case NOTES_FAILURE:
       return {
         ...state,
         failed: true,
@@ -34,10 +36,16 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case GET_NOTES_SUCCESS:
       return {
         ...state,
-        all: action.notes,
+        all: action.payload.notes,
         isLoading: false,
         isLoaded: true,
       };
+    case CREATE_NOTE_SUCCESS:
+      return {
+        ...state,
+        all: [...state.all, action.payload.note],
+        isLoading: false,
+      }
     default:
       return state;
   }

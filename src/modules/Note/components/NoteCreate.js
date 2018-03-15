@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { submit } from 'redux-form'
 
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
@@ -14,6 +15,7 @@ import NoteDialog from './NoteDialog';
 import NoteCreateForm from './NoteCreateForm';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
+import { createNote } from '../NoteActions';
 
 const styles = theme => ({
   active: {
@@ -24,6 +26,7 @@ const styles = theme => ({
 const propTypes = {
   classes: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
+  createNote: PropTypes.func.isRequired,
 };
 
 class NoteCreate extends Component {
@@ -39,18 +42,29 @@ class NoteCreate extends Component {
     updateThemeColor(this.state.activeColor);
   }
 
-  handleChangeColor = color => {
-    this.setState({ activeColor: color });
+  handleSubmit = values => {
+    values = {
+      ...values,
+      color: this.state.activeColor,
+    };
+
+    this.props.createNote(values);
+    this.handleClose();
   }
 
   handleClose = () => {
     this.props.close();
-  };
+  }
+
+  handleChangeColor = color => {
+    this.setState({ activeColor: color });
+  }
+
+  
 
   render() {
-    const { classes } = this.props;
+    const { classes, submitForm } = this.props;
     const { activeColor } = this.state;
-    console.log(activeColor);
     const colors = [
       {
         label: 'White',
@@ -84,8 +98,9 @@ class NoteCreate extends Component {
           handleClose={this.handleClose}
           title={'Create Note'}
           noteColor={activeColor}
+          submitForm={submitForm}
         >
-          <NoteCreateForm />
+          <NoteCreateForm onSubmit={this.handleSubmit} />
           <div>
             {
               colors.map(color => (
@@ -110,6 +125,8 @@ class NoteCreate extends Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   close: () => push('/notes'),
+  submitForm: () => submit('noteCreate'),
+  createNote,
 }, dispatch);
 
 NoteCreate.propTypes = propTypes;
