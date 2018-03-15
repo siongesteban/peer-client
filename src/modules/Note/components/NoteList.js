@@ -43,9 +43,10 @@ const styles = theme => ({
 
 const propTypes = {
   classes: PropTypes.object.isRequired,
-  notes: PropTypes.array.isRequired,
+  notes: PropTypes.array,
   location: PropTypes.object.isRequired,
   getNotes: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 class NoteList extends Component {
@@ -54,7 +55,7 @@ class NoteList extends Component {
   };
 
   componentWillMount() {
-    if (!this.props.notes.isLoaded) {
+    if (!this.props.isLoaded) {
       if (window.navigator.onLine) {
         this.props.getNotes();
       } else {
@@ -68,14 +69,13 @@ class NoteList extends Component {
   }
 
   render() {
-    const { classes, notes } = this.props;
-    const { isLoading } = this.props.notes;
+    const { classes, notes, isLoading, isLoaded } = this.props;
 
     if (!this.state.canConnect) {
-      return <Typography>Can't connect right now.</Typography>;
+      return <Typography align="center">Can't connect right now.</Typography>;
     }
 
-    if (isLoading) {
+    if (!isLoaded && isLoading) {
       return (
         <Grid
           container
@@ -122,7 +122,7 @@ class NoteList extends Component {
                 </Grid>
               ))}
             </Grid>
-          : 'Empty'
+          : <Typography align="center">You currently don't have a note.</Typography>
         }
         <Button
           className={classes.fab}
@@ -140,7 +140,9 @@ class NoteList extends Component {
 }
 
 const mapStateToProps = state => ({
-  notes: state.notes.all
+  notes: state.notes.all,
+  isLoading: state.notes.isLoading,
+  isLoaded: state.notes.isLoaded,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

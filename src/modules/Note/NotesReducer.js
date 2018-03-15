@@ -54,7 +54,7 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case CREATE_NOTE_SUCCESS:
       return {
         ...state,
-        all: [...state.all, action.payload.note],
+        all: [action.payload.note, ...state.all],
         successful: true,
         isLoading: false,
       }

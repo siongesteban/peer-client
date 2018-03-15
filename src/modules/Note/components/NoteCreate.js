@@ -41,8 +41,8 @@ class NoteCreate extends Component {
     updateThemeColor(this.state.activeColor);
     
     if (this.props.successful) {
-      this.handleClose();
       this.props.reset();
+      this.handleClose();
     }
   }
 

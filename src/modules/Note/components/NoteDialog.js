@@ -93,6 +93,7 @@ class NoteDialog extends Component {
                 <IconButton
                   className={classes.menuButton}
                   aria-label="Menu"
+                  disabled={isLoading}
                   onClick={handleClose}
                 >
                   <ArrowBackIcon />
@@ -132,7 +133,7 @@ class NoteDialog extends Component {
                 disabled={isLoading}
                 onClick={submitForm}
               >
-                Save
+                {isLoading ? 'Saving...' : 'Save'}
               </Button>
             }
           </DialogActions>
