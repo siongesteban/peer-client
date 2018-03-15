@@ -32,7 +32,7 @@ const propTypes = {
 
 class NoteDetail extends Component {
   componentDidMount() {
-    updateThemeColor(this.props.note.color);
+    updateThemeColor(this.props.note.color || this.props.note.parentNote.color);
   }
 
   handleClose = () => {
@@ -49,7 +49,7 @@ class NoteDetail extends Component {
       <div>
         <NoteDialog
           handleClose={this.handleClose}
-          noteColor={this.props.note.color || '#fff'}
+          noteColor={note.color}
         >
           <Typography
             variant="display2"

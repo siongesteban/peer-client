@@ -1,6 +1,7 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import {
+  CLEAR_NOTES,
   RESET,
   NOTES_FAILURE,
   NOTES_REQUEST,
@@ -23,6 +24,12 @@ const persistConfig = {
 
 export const notesReducer = persistReducer(persistConfig, (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_NOTES:
+      return {
+        ...state,
+        all: [],
+        isLoaded: false,
+      };
     case RESET:
       return {
         ...state,

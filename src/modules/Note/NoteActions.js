@@ -8,6 +8,13 @@ export const NOTES_FAILURE = 'note/NOTES_FAILURE';
 export const NOTES_REQUEST = 'note/NOTES_REQUEST';
 export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
 export const CREATE_NOTE_SUCCESS = 'note/CREATE_NOTE_SUCCESS';
+export const CLEAR_NOTES = 'note/CLEAR_NOTES';
+
+export const clearNotes = () => {
+  return {
+    type: CLEAR_NOTES
+  };
+};
 
 export const reset = () => {
   return {
