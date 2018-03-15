@@ -24,6 +24,9 @@ const styles = theme => ({
   date: {
     color: 'rgba(0, 0, 0, 0.5)',
   },
+  typography: {
+    color: '#000',
+  },
 });
 
 const propTypes = {
@@ -69,6 +72,7 @@ class NoteDetail extends Component {
               >
                 <div onClick={this.handleGoToEdit}>
                   <Typography
+                    className={classes.typography}
                     variant="display2"
                     gutterBottom
                   >
@@ -80,6 +84,13 @@ class NoteDetail extends Component {
                   >
                   </Typography>
                   <Typography
+                    className={classes.typography}
+                    gutterBottom
+                    variant={note.content.length <= 90 ? 'display1' : 'subheading'}
+                  >
+                    {note.content}
+                  </Typography>
+                  <Typography
                     gutterBottom
                     className={classes.date}
                   >
@@ -88,15 +99,12 @@ class NoteDetail extends Component {
                     }
                   </Typography>
                   <Typography
-                    gutterBottom
                     className={classes.date}
                   >
                     {
+                      note.createdAt !== note.updatedAt &&
                       `Last Update: ${formatDate(note.updatedAt)}`
                     }
-                  </Typography>
-                  <Typography gutterBottom>
-                    {note.content}
                   </Typography>
                 </div>
               </NoteDialog>
