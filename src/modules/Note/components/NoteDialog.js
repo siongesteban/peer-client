@@ -29,6 +29,12 @@ const styles = theme => ({
   dialogContent: {
     paddingTop: 20,
   },
+  dialogActions: {
+    margin: 0,
+  },
+  dialogActionButtons: {
+    margin: theme.spacing.unit,
+  },
   divider: {
     marginTop: 20,
     marginBottom: 20,
@@ -104,12 +110,24 @@ class NoteDialog extends Component {
           >
             {children}
           </DialogContent>
-          <DialogActions>
+          <DialogActions
+            className={classes.dialogActions}
+            style={{ background: noteColor }}
+          >
             <Hidden smDown>
-              <Button onClick={handleClose} color="primary">
+              <Button
+                className={classes.dialogActionButtons}
+                onClick={handleClose}
+              >
                 Close
               </Button>
             </Hidden>
+            <Button
+              className={classes.dialogActionButtons}
+              onClick={handleClose}
+            >
+              Save
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
