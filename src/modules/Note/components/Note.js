@@ -44,11 +44,7 @@ const propTypes = {
 
 class Note extends Component {
   handleSetNote = () => {
-    const note = this.props.note.isPartOfCollab
-      ? this.props.note.parentNote
-      : this.props.note;
-
-    this.props.setCurrentNote(note);
+    this.props.setCurrentNote(this.props.note);
   }
 
   render() {
@@ -80,19 +76,6 @@ class Note extends Component {
             <Typography className={classNames(classes.typography, classes.date)}>
               {formatDate(note.updatedAt)}
             </Typography>
-            {
-              note.collabs.length > 0 &&
-              <Typography
-                className={classNames(classes.typography, classes.pos)}
-                variant="body2"
-              >
-                Shared
-                {
-                  this.props.note.isPartOfCollab &&
-                  ` by ${this.props.note.parentNote.author.givenName}`
-                }
-              </Typography>
-            }
             <Typography
               className={classes.typography}
               component={TextTruncate}

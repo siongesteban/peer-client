@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -9,6 +10,7 @@ import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
 import NoteDialog from './NoteDialog';
+import NoteEdit from './NoteEdit';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
 import formatDate from '../../../utils/formatDate';
@@ -35,17 +37,6 @@ const propTypes = {
 };
 
 class NoteDetail extends Component {
-  // componentWillMount() {
-  //   let note = this.props.notes.filter(note => (
-  //     note._id === this.props.match.params.id
-  //   ))[0];
-  //   note = note.isPartOfCollab
-  //     ? note.parentNote
-  //     : note;
-
-  //   this.props.setCurrentNote(note);
-  // }
-
   componentDidMount() {
     updateThemeColor(this.props.note.color);
   }
@@ -55,96 +46,63 @@ class NoteDetail extends Component {
     this.props.reset();
   };
 
+  handleGoToEdit = () => {
+    this.props.goToEdit(this.props.match.params.id);
+  }
+
   render() {
     const { classes, authUserId, note } = this.props;
 
     return (
       <div>
-        <NoteDialog
-          handleClose={this.handleClose}
-          noteColor={note.color}
-        >
-          <Typography
-            variant="display2"
-            gutterBottom
-          >
-            {note.title}
-          </Typography>
-          <Typography
-            variant="body2"
-            gutterBottom
-          >
-            {
-              this.props.note.isPartOfCollab &&
-              <Typography
-                variant="body2"
-                gutterBottom
+        <Switch>
+          <Route
+            path="/notes/:id/edit"
+            component={NoteEdit}
+          />
+          <Route
+            path="/notes/:id"
+            render={() => (
+              <NoteDialog
+                handleClose={this.handleClose}
+                noteColor={note.color}
               >
-                {`Shared by ${note.author.givenName}`}
-              </Typography>
-            }
-          </Typography>
-          <Typography
-            gutterBottom
-            className={classes.date}
-          >
-            {
-              `Date Created: ${formatDate(note.createdAt)}`
-            }
-          </Typography>
-          <Typography
-            gutterBottom
-            className={classes.date}
-          >
-            {
-              `Last Update: ${formatDate(note.updatedAt)}`
-            }
-          </Typography>
-          <Typography gutterBottom>
-            {note.content}
-          </Typography>
-          {
-            note.collabs.length > 0 &&
-            note.collabs.map(collab => (
-              <div key={collab._id}>
-                <Divider
-                  className={classes.divider}
-                />
+                <Typography
+                  variant="display2"
+                  gutterBottom
+                >
+                  {note.title}
+                </Typography>
                 <Typography
                   variant="body2"
                   gutterBottom
                 >
-                  {
-                    collab.author !== authUserId
-                    ? `${collab.author.givenName} ${collab.author.familyName}`
-                    : 'You'
-                  }
-                </Typography>
-                <Typography className={classes.date}>
-                  Date Added: {formatDate(collab.createdAt)}
                 </Typography>
                 <Typography
                   gutterBottom
                   className={classes.date}
                 >
                   {
-                    collab.content &&
-                    `Last Update: ${formatDate(collab.updatedAt)}`
+                    `Date Created: ${formatDate(note.createdAt)}`
                   }
                 </Typography>
-                {
-                  collab.content
-                  ? <Typography gutterBottom>
-                      {collab.content}
-                    </Typography>
-                  : <Typography gutterBottom>
-                      No content
-                    </Typography>
-                }
-              </div>
-            ))
-          }
-        </NoteDialog>
+                <Typography
+                  gutterBottom
+                  className={classes.date}
+                >
+                  {
+                    `Last Update: ${formatDate(note.updatedAt)}`
+                  }
+                </Typography>
+                <div onClick={this.handleGoToEdit}>
+                  <Typography gutterBottom>
+                    {note.content}
+                  </Typography>
+                </div>
+              </NoteDialog>
+            )}
+          />
+        </Switch>
       </div>
     );
   }
@@ -152,11 +110,11 @@ class NoteDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   note: state.notes.current,
-  notes: state.notes.all,
   authUserId: state.auth.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  goToEdit: noteId => push(`/notes/${noteId}/edit`),
   close: () => push('/notes'),
   setCurrentNote,
   reset,
