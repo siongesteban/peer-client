@@ -11,6 +11,7 @@ export const NOTES_REQUEST = 'note/NOTES_REQUEST';
 export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
 export const CREATE_NOTE_SUCCESS = 'note/CREATE_NOTE_SUCCESS';
 export const UPDATE_NOTE_SUCCESS = 'note/UPDATE_NOTE_SUCCESS';
+export const DELETE_NOTE_SUCCESS = 'note/DELETE_NOTE_SUCCESS';
 
 export const clearNotes = () => {
   return {
@@ -75,7 +76,16 @@ export const updateNoteSuccess = note => {
       note
     }
   };
-}
+};
+
+export const deleteNoteSuccess = noteId => {
+  return {
+    type: DELETE_NOTE_SUCCESS,
+    payload: {
+      noteId
+    }
+  };
+};
 
 export const setCurrentNote = note => {
   return {
@@ -113,5 +123,20 @@ export const updateNote = (id, note) => {
         dispatch(notesFailure());
         dispatch(setSnackbarMessage(err.response.data.message));
       });
+  }
+};
+
+export const deleteNote = id => {
+  return dispatch => {
+    dispatch(notesRequest());
+
+    axios.delete(`${secret.API_URL}/notes/${id}`)
+      .then(res => {
+        dispatch(deleteNoteSuccess(id));
+      })
+      .catch(err => {
+        dispatch(notesFailure());
+        dispatch(setSnackbarMessage(err.response.data.message));
+      })
   }
 }

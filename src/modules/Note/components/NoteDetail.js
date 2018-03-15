@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
 import NoteDialog from './NoteDialog';
@@ -54,7 +53,7 @@ class NoteDetail extends Component {
   }
 
   render() {
-    const { classes, authUserId, note } = this.props;
+    const { classes, note } = this.props;
 
     return (
       <div>
@@ -118,7 +117,6 @@ class NoteDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   note: state.notes.current,
-  authUserId: state.auth.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

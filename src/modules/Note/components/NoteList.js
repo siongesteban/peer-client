@@ -15,8 +15,9 @@ import Masonry from 'react-masonry-component';
 import Note from './Note';
 import NoteDetail from './NoteDetail';
 import NoteCreate from './NoteCreate';
+import DeleteConfirmationDialog from '../../../components/ConfirmationDialog';
 
-import { getNotes } from '../NoteActions';
+import { getNotes, deleteNote, reset } from '../NoteActions';
 
 const styles = theme => ({
   root: {
@@ -45,13 +46,18 @@ const propTypes = {
   classes: PropTypes.object.isRequired,
   notes: PropTypes.array,
   location: PropTypes.object.isRequired,
-  getNotes: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  successful: PropTypes.bool.isRequired,
+  getNotes: PropTypes.func.isRequired,
+  deleteNote: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 class NoteList extends Component {
   state = {
     canConnect: true,
+    dialogIsOpen: false,
+    currentNoteId: null,
   };
 
   componentWillMount() {
@@ -62,6 +68,29 @@ class NoteList extends Component {
         this.setState({ canConnect: false });
       }
     }
+  }
+
+  componentDidUpdate() {
+    if (this.props.successful) {
+      this.toggleDialog();
+      this.props.reset();
+    }
+  }
+
+  toggleDialog = noteId => {
+    this.setState({
+      dialogIsOpen: !this.state.dialogIsOpen
+    });
+
+    if (noteId) {
+      this.setState({ currentNoteId: noteId });
+    } else {
+      this.setState({ currentNoteId: null });
+    }
+  }
+
+  handleDeleteNote = () => {
+    this.props.deleteNote(this.state.currentNoteId);
   }
 
   handleRefresh() {
@@ -101,6 +130,15 @@ class NoteList extends Component {
             component={NoteDetail}
           />
         </Switch>
+        <DeleteConfirmationDialog
+          isOpen={this.state.dialogIsOpen}
+          isLoading={isLoading}
+          title={'Delete note'}
+          message={'Are you sure you want to delete the note?'}
+          buttons={{ neg: 'No', pos: 'Yes' }}
+          toggleDialog={this.toggleDialog}
+          handlePos={this.handleDeleteNote}
+        />
         {
           notes.length > 0
           ? <Grid
@@ -118,7 +156,10 @@ class NoteList extends Component {
                   xl={2}
                   className={classes.grid}
                 >
-                  <Note note={note} />
+                  <Note
+                    note={note}
+                    toggleDialog={this.toggleDialog}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -143,10 +184,13 @@ const mapStateToProps = state => ({
   notes: state.notes.all,
   isLoading: state.notes.isLoading,
   isLoaded: state.notes.isLoaded,
+  successful: state.notes.successful,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getNotes,
+  deleteNote,
+  reset
 }, dispatch);
 
 NoteList.propTypes = propTypes;

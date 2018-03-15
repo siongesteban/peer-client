@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import truncate from 'truncate';
 
 import { withStyles } from 'material-ui/styles';
-import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import ButtonBase from 'material-ui/ButtonBase';
+import Card, { CardContent, CardActions } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 import formatDate from '../../../utils/formatDate';
 import { setCurrentNote } from '../NoteActions';
@@ -52,6 +51,23 @@ const propTypes = {
 };
 
 class Note extends Component {
+  state = {
+    anchorEl: null,
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleDeleteClick = () => {
+    this.props.toggleDialog(this.props.note._id);
+    this.handleClose();
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   handleSetNote = () => {
     this.props.setCurrentNote(this.props.note);
     this.props.goToDetail(this.props.note._id);
@@ -63,6 +79,7 @@ class Note extends Component {
       ? this.props.note.parentNote
       : this.props.note;
 
+    const { anchorEl } = this.state;
     return (
       <Card
         style={{ backgroundColor: note.color }} 
@@ -92,9 +109,20 @@ class Note extends Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton style={{ marginLeft: 'auto' }}>
+          <IconButton
+            style={{ marginLeft: 'auto' }}
+            onClick={this.handleClick}
+          >
             <MoreVertIcon />
           </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={this.handleClose}
+          >
+            <MenuItem onClick={this.handleDeleteClick}>Delete</MenuItem>
+          </Menu>
         </CardActions>
       </Card>
     );

@@ -8,7 +8,8 @@ import {
   GET_NOTES_SUCCESS,
   SET_CURRENT_NOTE,
   CREATE_NOTE_SUCCESS,
-  UPDATE_NOTE_SUCCESS
+  UPDATE_NOTE_SUCCESS,
+  DELETE_NOTE_SUCCESS,
 } from './NoteActions';
 
 const initialState = {
@@ -90,6 +91,16 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
         successful: true,
         isLoading: false,
       };
+    case DELETE_NOTE_SUCCESS:
+      return {
+        ...state,
+        all: state.all.filter(note => (
+          note._id !== action.payload.noteId
+        )),
+        current: {},
+        successful: true,
+        isLoading: false,
+      }
     default:
       return state;
   }
