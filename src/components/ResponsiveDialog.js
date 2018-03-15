@@ -56,7 +56,7 @@ const propTypes = {
   submitForm: PropTypes.func.isRequired,
 };
 
-class ProfileEdit extends React.Component {
+class ResponsiveDialog extends React.Component {
   render() {
     const {
       classes,
@@ -153,8 +153,8 @@ class ProfileEdit extends React.Component {
   }
 }
 
-ProfileEdit.propTypes = propTypes;
-ProfileEdit = withMobileDialog()(ProfileEdit);
-ProfileEdit = withStyles(styles)(ProfileEdit);
+ResponsiveDialog.propTypes = propTypes;
+ResponsiveDialog = withMobileDialog()(ResponsiveDialog);
+ResponsiveDialog = withStyles(styles)(ResponsiveDialog);
 
-export default ProfileEdit;
+export default ResponsiveDialog;

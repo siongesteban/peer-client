@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -14,6 +14,7 @@ import Masonry from 'react-masonry-component';
 
 import Note from './Note';
 import NoteDetail from './NoteDetail';
+import NoteCreate from './NoteCreate';
 
 import { getNotes } from '../NoteActions';
 
@@ -90,10 +91,16 @@ class NoteList extends Component {
 
     return (
       <div className={classes.root}>
-        <Route
-          path="/notes/:id"
-          component={NoteDetail}
-        />
+        <Switch>
+          <Route
+            path="/notes/create"
+            component={NoteCreate}
+          />
+          <Route
+            path="/notes/:id"
+            component={NoteDetail}
+          />
+        </Switch>
         {
           notes.length > 0
           ? <Grid
@@ -118,10 +125,12 @@ class NoteList extends Component {
           : 'Empty'
         }
         <Button
+          className={classes.fab}
           variant="fab"
           color="primary"
           aria-label="add"
-          className={classes.fab}
+          component={Link}
+          to="/notes/create"
         >
           <AddIcon />
         </Button>
