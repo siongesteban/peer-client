@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Offline } from 'react-detect-offline';
@@ -15,9 +16,12 @@ import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
 import CheckIcon from 'material-ui-icons/CheckCircle';
+import AccountCircle from 'material-ui-icons/AccountCircle';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 import { toggleDrawer } from '../LayoutActions';
 import { DRAWER_WIDTH } from '../LayoutConstants';
+import { logOut } from '../../Auth/AuthActions';
 
 const styles = theme => ({
   appBar: {
@@ -38,6 +42,10 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  avatar: {
+    width: 32,
+    height: 32,
+  },
   menuButton: {
     marginLeft: 12,
     marginRight: 16,
@@ -52,7 +60,8 @@ const styles = theme => ({
     flex: 1,
   },
   offlineIndicator: {
-    background: '#fff !important'
+    background: '#fff !important',
+    marginRight: theme.spacing.unit,
   },
   offlineIndicatorIcon: {
     marginRight: theme.spacing.unit,
@@ -62,11 +71,27 @@ const styles = theme => ({
 const propTypes = {
   classes: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired,
 };
 
 class TopNav extends Component {
+  state = {
+    anchorEl: null,
+  }
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
-    const { classes, isOpen } = this.props;
+    const { classes, isOpen, logOut } = this.props;
+    const { anchorEl } = this.state;
+    const profileMenuIsOpen = Boolean(anchorEl);
 
     return (
       <AppBar
@@ -116,6 +141,43 @@ class TopNav extends Component {
               <CheckIcon className={classes.offlineIndicatorIcon} /> Offline
             </Button>
           </Offline>
+          <div>
+            <IconButton
+              aria-owns={profileMenuIsOpen ? 'menu-appbar' : null}
+              aria-haspopup="true"
+              onClick={this.handleMenu}
+              color="inherit"
+            >
+              <Avatar
+                className={classes.avatar}
+                alt="Siong Esteban"
+                src="/static/images/siong.jpg"
+              />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={profileMenuIsOpen}
+              onClose={this.handleClose}
+            >
+              <MenuItem
+                onClick={this.handleClose}
+                component={Link}
+                to="/me"
+              >
+                Account
+              </MenuItem>
+              <MenuItem onClick={logOut}>Log Out</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
     );
@@ -128,6 +190,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   toggleDrawer,
+  logOut,
 }, dispatch);
 
 TopNav.propTypes = propTypes;

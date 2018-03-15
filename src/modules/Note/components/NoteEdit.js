@@ -92,8 +92,6 @@ class NoteEdit extends Component {
       },
     ];
 
-    console.log(this.props.note);
-
     return (
       <div>
         <NoteDialog

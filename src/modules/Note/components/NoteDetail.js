@@ -33,7 +33,6 @@ const propTypes = {
   note: PropTypes.object,
   notes: PropTypes.array,
   close: PropTypes.func.isRequired,
-  authUserId: PropTypes.string.isRequired,
   setCurrentNote: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
 };
