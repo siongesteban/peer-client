@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
 
 import { withStyles } from 'material-ui/styles';
@@ -10,6 +12,7 @@ import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 
 import formatDate from '../../../utils/formatDate';
+import { setCurrentNote } from '../NoteActions';
 
 const styles = theme => ({
   title: {
@@ -36,9 +39,18 @@ const styles = theme => ({
 const propTypes = {
   classes: PropTypes.object.isRequired,
   note: PropTypes.object.isRequired,
+  setCurrentNote: PropTypes.func.isRequired,
 };
 
 class Note extends Component {
+  handleSetNote = () => {
+    const note = this.props.note.isPartOfCollab
+      ? this.props.note.parentNote
+      : this.props.note;
+
+    this.props.setCurrentNote(note);
+  }
+
   render() {
     const { classes } = this.props;
     const note = this.props.note.isPartOfCollab
@@ -51,6 +63,7 @@ class Note extends Component {
         focusRipple
         component={Link}
         to={`/notes/${this.props.note._id}`}
+        onClick={this.handleSetNote}
       >
         <Card
           style={{ backgroundColor: note.color }} 
@@ -95,7 +108,12 @@ class Note extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setCurrentNote,
+}, dispatch);
+
 Note.propTypes = propTypes;
 Note = withStyles(styles)(Note);
+Note = connect(null, mapDispatchToProps)(Note);
 
 export default Note;

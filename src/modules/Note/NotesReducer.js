@@ -6,11 +6,13 @@ import {
   NOTES_FAILURE,
   NOTES_REQUEST,
   GET_NOTES_SUCCESS,
-  CREATE_NOTE_SUCCESS
+  CREATE_NOTE_SUCCESS,
+  SET_CURRENT_NOTE,
 } from './NoteActions';
 
 const initialState = {
   all: [],
+  current: {},
   failed: false,
   successful: false,
   isLoading: false,
@@ -33,6 +35,7 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case RESET:
       return {
         ...state,
+        current: {},
         isLoading: false,
         failed: false,
         successful: false,
@@ -65,6 +68,11 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
         successful: true,
         isLoading: false,
       }
+    case SET_CURRENT_NOTE:
+      return {
+        ...state,
+        current: action.payload.note,
+      };
     default:
       return state;
   }

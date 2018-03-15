@@ -9,6 +9,7 @@ export const NOTES_REQUEST = 'note/NOTES_REQUEST';
 export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
 export const CREATE_NOTE_SUCCESS = 'note/CREATE_NOTE_SUCCESS';
 export const CLEAR_NOTES = 'note/CLEAR_NOTES';
+export const SET_CURRENT_NOTE = 'note/SET_CURRENT_NOTE';
 
 export const clearNotes = () => {
   return {
@@ -64,7 +65,7 @@ export const createNoteSuccess = note => {
       note
     }
   };
-}
+};
 
 export const createNote = note => {
   return dispatch => {
@@ -79,4 +80,13 @@ export const createNote = note => {
         dispatch(setSnackbarMessage(err.response.data.message));
       });
   }
+};
+
+export const setCurrentNote = note => {
+  return {
+    type: SET_CURRENT_NOTE,
+    payload: {
+      note
+    }
+  };
 }

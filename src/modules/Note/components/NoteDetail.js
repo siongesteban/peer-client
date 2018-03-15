@@ -12,6 +12,7 @@ import NoteDialog from './NoteDialog';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
 import formatDate from '../../../utils/formatDate';
+import { reset, setCurrentNote } from '../NoteActions';
 
 const styles = theme => ({
   divider: {
@@ -25,25 +26,37 @@ const styles = theme => ({
 
 const propTypes = {
   classes: PropTypes.object.isRequired,
-  note: PropTypes.object.isRequired,
+  note: PropTypes.object,
+  notes: PropTypes.array,
   close: PropTypes.func.isRequired,
   authUserId: PropTypes.string.isRequired,
+  setCurrentNote: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 class NoteDetail extends Component {
+  // componentWillMount() {
+  //   let note = this.props.notes.filter(note => (
+  //     note._id === this.props.match.params.id
+  //   ))[0];
+  //   note = note.isPartOfCollab
+  //     ? note.parentNote
+  //     : note;
+
+  //   this.props.setCurrentNote(note);
+  // }
+
   componentDidMount() {
-    updateThemeColor(this.props.note.color || this.props.note.parentNote.color);
+    updateThemeColor(this.props.note.color);
   }
 
   handleClose = () => {
     this.props.close();
+    this.props.reset();
   };
 
   render() {
-    const { classes, authUserId } = this.props;
-    const note = this.props.note.isPartOfCollab
-      ? this.props.note.parentNote
-      : this.props.note;
+    const { classes, authUserId, note } = this.props;
 
     return (
       <div>
@@ -138,12 +151,15 @@ class NoteDetail extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  note: state.notes.all.filter(note => note._id === ownProps.match.params.id)[0],
+  note: state.notes.current,
+  notes: state.notes.all,
   authUserId: state.auth.user.id,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   close: () => push('/notes'),
+  setCurrentNote,
+  reset,
 }, dispatch);
 
 NoteDetail.propTypes = propTypes;
