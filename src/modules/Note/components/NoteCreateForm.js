@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
 import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';
-import List, { ListItem, ListItemIcon } from 'material-ui/List';
-import AccountIcon from 'material-ui-icons/AccountBox';
-import EmailIcon from 'material-ui-icons/Email';
 
 import validateFields from '../../../utils/validate';
 
@@ -39,6 +35,7 @@ const styles = theme => ({
 const propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 const validate = values => {
@@ -49,7 +46,7 @@ const validate = values => {
 
 class NoteCreateForm extends Component {
   render() {
-    const { classes, handleSubmit } = this.props;
+    const { classes, handleSubmit, isLoading } = this.props;
     
     return(
      <form onSubmit={handleSubmit}>
@@ -58,12 +55,14 @@ class NoteCreateForm extends Component {
             name="title"
             component={TextField}
             label="Title"
+            disabled={isLoading}
             fullWidth
           />
           <Field
             name="content"
             component={TextField}
             label="Content"
+            disabled={isLoading}
             margin="normal"
             placeholder="Start typing your note..."
             multiline

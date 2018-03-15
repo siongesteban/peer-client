@@ -5,8 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form'
 
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
@@ -15,7 +13,7 @@ import NoteDialog from './NoteDialog';
 import NoteCreateForm from './NoteCreateForm';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
-import { createNote } from '../NoteActions';
+import { createNote, reset } from '../NoteActions';
 
 const styles = theme => ({
   active: {
@@ -27,6 +25,7 @@ const propTypes = {
   classes: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
   createNote: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 class NoteCreate extends Component {
@@ -40,6 +39,11 @@ class NoteCreate extends Component {
 
   componentDidUpdate() {
     updateThemeColor(this.state.activeColor);
+    
+    if (this.props.successful) {
+      this.handleClose();
+      this.props.reset();
+    }
   }
 
   handleSubmit = values => {
@@ -49,7 +53,6 @@ class NoteCreate extends Component {
     };
 
     this.props.createNote(values);
-    this.handleClose();
   }
 
   handleClose = () => {
@@ -60,10 +63,8 @@ class NoteCreate extends Component {
     this.setState({ activeColor: color });
   }
 
-  
-
   render() {
-    const { classes, submitForm } = this.props;
+    const { classes, submitForm, isLoading } = this.props;
     const { activeColor } = this.state;
     const colors = [
       {
@@ -98,9 +99,13 @@ class NoteCreate extends Component {
           handleClose={this.handleClose}
           title={'Create Note'}
           noteColor={activeColor}
+          isLoading={isLoading}
           submitForm={submitForm}
         >
-          <NoteCreateForm onSubmit={this.handleSubmit} />
+          <NoteCreateForm
+            onSubmit={this.handleSubmit}
+            isLoading={isLoading}
+          />
           <div>
             {
               colors.map(color => (
@@ -123,14 +128,20 @@ class NoteCreate extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoading: state.notes.isLoading,
+  successful: state.notes.successful,
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators({
   close: () => push('/notes'),
   submitForm: () => submit('noteCreate'),
   createNote,
+  reset,
 }, dispatch);
 
 NoteCreate.propTypes = propTypes;
 NoteCreate = withStyles(styles)(NoteCreate);
-NoteCreate = connect(null, mapDispatchToProps)(NoteCreate);
+NoteCreate = connect(mapStateToProps, mapDispatchToProps)(NoteCreate);
 
 export default NoteCreate;

@@ -1,11 +1,19 @@
 import axios from 'axios';
 
 import secret from '../../secret';
+import { setSnackbarMessage } from '../Layout/LayoutActions';
 
+export const RESET = 'note/RESET';
 export const NOTES_FAILURE = 'note/NOTES_FAILURE';
 export const NOTES_REQUEST = 'note/NOTES_REQUEST';
 export const GET_NOTES_SUCCESS = 'note/GET_NOTES_SUCCESS';
 export const CREATE_NOTE_SUCCESS = 'note/CREATE_NOTE_SUCCESS';
+
+export const reset = () => {
+  return {
+    type: RESET
+  };
+};
 
 export const notesFailure = () => {
   return {
@@ -59,8 +67,9 @@ export const createNote = note => {
       .then(res => {
         dispatch(createNoteSuccess(res.data.note));
       })
-      .catch(() => {
+      .catch(err => {
         dispatch(notesFailure());
+        dispatch(setSnackbarMessage(err.response.data.message));
       });
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { withStyles } from 'material-ui/styles';
 import Hidden from 'material-ui/Hidden';
 import IconButton from 'material-ui/IconButton';
 import AppBar from 'material-ui/AppBar';
@@ -13,7 +14,6 @@ import Dialog, {
   DialogActions,
   withMobileDialog,
 } from 'material-ui/Dialog';
-import { withStyles } from 'material-ui/styles';
 
 import { updateThemeColor } from '../../Layout/LayoutUtils';
 
@@ -54,6 +54,7 @@ const propTypes = {
   handleClose: PropTypes.func.isRequired,
   noteColor: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 class NoteDialog extends Component {
@@ -68,6 +69,7 @@ class NoteDialog extends Component {
       fullScreen,
       handleClose,
       submitForm,
+      isLoading,
       noteColor,
       children
     } = this.props;
@@ -123,12 +125,16 @@ class NoteDialog extends Component {
                 Close
               </Button>
             </Hidden>
-            <Button
-              className={classes.dialogActionButtons}
-              onClick={submitForm}
-            >
-              Save
-            </Button>
+            {
+              typeof submitForm === 'function' &&
+              <Button
+                className={classes.dialogActionButtons}
+                disabled={isLoading}
+                onClick={submitForm}
+              >
+                Save
+              </Button>
+            }
           </DialogActions>
         </Dialog>
       </div>
