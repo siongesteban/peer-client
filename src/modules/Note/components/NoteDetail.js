@@ -67,34 +67,34 @@ class NoteDetail extends Component {
                 handleClose={this.handleClose}
                 noteColor={note.color}
               >
-                <Typography
-                  variant="display2"
-                  gutterBottom
-                >
-                  {note.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  gutterBottom
-                >
-                </Typography>
-                <Typography
-                  gutterBottom
-                  className={classes.date}
-                >
-                  {
-                    `Date Created: ${formatDate(note.createdAt)}`
-                  }
-                </Typography>
-                <Typography
-                  gutterBottom
-                  className={classes.date}
-                >
-                  {
-                    `Last Update: ${formatDate(note.updatedAt)}`
-                  }
-                </Typography>
                 <div onClick={this.handleGoToEdit}>
+                  <Typography
+                    variant="display2"
+                    gutterBottom
+                  >
+                    {note.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    gutterBottom
+                  >
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    className={classes.date}
+                  >
+                    {
+                      `Date Created: ${formatDate(note.createdAt)}`
+                    }
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    className={classes.date}
+                  >
+                    {
+                      `Last Update: ${formatDate(note.updatedAt)}`
+                    }
+                  </Typography>
                   <Typography gutterBottom>
                     {note.content}
                   </Typography>

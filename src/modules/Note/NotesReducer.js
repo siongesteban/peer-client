@@ -6,8 +6,9 @@ import {
   NOTES_FAILURE,
   NOTES_REQUEST,
   GET_NOTES_SUCCESS,
-  CREATE_NOTE_SUCCESS,
   SET_CURRENT_NOTE,
+  CREATE_NOTE_SUCCESS,
+  UPDATE_NOTE_SUCCESS
 } from './NoteActions';
 
 const initialState = {
@@ -40,6 +41,11 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
         failed: false,
         successful: false,
       };
+    case SET_CURRENT_NOTE:
+      return {
+        ...state,
+        current: action.payload.note,
+      };
     case NOTES_REQUEST:
       return {
         ...state,
@@ -67,11 +73,22 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
         all: [action.payload.note, ...state.all],
         successful: true,
         isLoading: false,
-      }
-    case SET_CURRENT_NOTE:
+      };
+    case UPDATE_NOTE_SUCCESS:
       return {
         ...state,
+        all: [
+          ...state.all.map(note => {
+            if (note._id === action.payload.note._id) {
+              return action.payload.note;
+            }
+
+            return note;
+          })
+        ],
         current: action.payload.note,
+        successful: true,
+        isLoading: false,
       };
     default:
       return state;
