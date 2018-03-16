@@ -1,7 +1,11 @@
 import axios from 'axios';
+import mongoose from 'mongoose';
+import moment from 'moment';
 
 import secret from '../../secret';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
+import { getUser } from '../Auth/AuthUtils';
+import { store } from '../../store';
 
 export const RESET = 'note/RESET';
 export const CLEAR_NOTES = 'note/CLEAR_NOTES';
@@ -97,17 +101,79 @@ export const setCurrentNote = note => {
 };
 
 export const createNote = note => {
+  const newNote = note;
+
   return dispatch => {
     dispatch(notesRequest());
 
-    axios.post(`${secret.API_URL}/notes`, note)
-      .then(res => {
-        dispatch(createNoteSuccess(res.data.note));
-      })
-      .catch(err => {
-        dispatch(notesFailure());
-        dispatch(setSnackbarMessage(err.response.data.message));
-      });
+    // Check connection first.
+    if (window.navigator.onLine) {
+      // Send post request if online.
+      axios.post(`${secret.API_URL}/notes`, newNote)
+        .then(res => {
+          // Determine if the data came from note queue.
+          if (newNote._queueId) {
+            // Dispatching createNoteSuccess without a param
+            // will retain the stored note while offline.
+            dispatch(createNoteSuccess());
+
+            // Get the current queue.
+            const noteQueue = JSON.parse(localStorage.getItem('noteQueue'));
+
+            // Remove the sent note from the queue.
+            localStorage.setItem('noteQueue', JSON.stringify(
+              noteQueue.filter(note => (
+                note._queueId !== newNote._queueId
+              ))
+            ));
+          } else {
+            // This happens if the user submitted while online.
+            dispatch(createNoteSuccess(res.data.note));
+          }
+        })
+        .catch(err => {
+          dispatch(notesFailure());
+          dispatch(setSnackbarMessage(err.response.data.message));
+        });
+    } else { // This where offline storing happens.
+      // Create a new note with a unique queue id.
+      const newNote = {
+        _queueId: new mongoose.Types.ObjectId(),
+        ...note
+      };
+
+      // Get current noteQueue
+      let noteQueue = JSON.parse(localStorage.getItem('noteQueue'));
+
+      // Create a noteQueue item is not present
+      if (!noteQueue) {
+        localStorage.setItem('noteQueue', JSON.stringify([]));
+      }
+
+      // Reset the noteQueue with the new note added.
+      localStorage.setItem('noteQueue', JSON.stringify([
+        ...noteQueue,
+        newNote
+      ]));
+
+      const user = getUser(localStorage.getItem('token'));
+
+      // Create a new note object to store with the
+      // additional props needed.
+      const noteToStore = {
+        ...note,
+        author: {
+          _id: user.id,
+          givenName: user.givenName,
+          familyName: user.familyName
+        },
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
+
+      // Send the note to the store.
+      dispatch(createNoteSuccess(noteToStore));
+    }
   }
 };
 
@@ -117,6 +183,7 @@ export const updateNote = (id, note) => {
 
     axios.patch(`${secret.API_URL}/notes/${id}`, note)
       .then(res => {
+        console.log('Returned updated note: ', res.data.note);
         dispatch(updateNoteSuccess(res.data.note));
       })
       .catch(err => {
@@ -140,3 +207,14 @@ export const deleteNote = id => {
       })
   }
 }
+
+// Post queued notes when on online
+window.addEventListener('online', () => {
+  const noteQueue = JSON.parse(localStorage.getItem('noteQueue'));
+
+  if (noteQueue || noteQueue.length > 0) {
+    noteQueue.forEach(note => {
+      store.dispatch(createNote(note));
+    });
+  }
+});

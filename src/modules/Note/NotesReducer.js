@@ -71,16 +71,23 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case CREATE_NOTE_SUCCESS:
       return {
         ...state,
-        all: [action.payload.note, ...state.all],
+        all: action.payload.note
+          ? [action.payload.note, ...state.all]
+          : [...state.all],
         successful: true,
         isLoading: false,
       };
     case UPDATE_NOTE_SUCCESS:
+      let noteIdFromPayload, noteIdFromStore;
+      
       return {
         ...state,
         all: [
           ...state.all.map(note => {
-            if (note._id === action.payload.note._id) {
+            noteIdFromPayload = action.payload.note._id.toString();
+            noteIdFromStore = note._id.toString();
+
+            if (noteIdFromPayload === noteIdFromStore) {
               return action.payload.note;
             }
 

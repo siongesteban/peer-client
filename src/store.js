@@ -27,13 +27,14 @@ const composedEnhancers = compose(
   ...enhancers
 );
 
+export const store = createStore(
+  rootReducer,
+  undefined,
+  composedEnhancers
+);
+
 export default () => {
-  let store = createStore(
-    rootReducer,
-    undefined,
-    composedEnhancers
-  );
-  let persistor = persistStore(store);
+  const persistor = persistStore(store);
 
   return { store, persistor };
 };
