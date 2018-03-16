@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TextTruncate from 'react-text-truncate';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -67,7 +67,10 @@ class Home extends Component {
             style={{ marginBottom: 16 }}
           >
             <Grid item>
-              <Button variant="fab" color="primary" className={classes.button} style={{ backgroundColor: red[500] }}>
+              <Button variant="fab" color="primary" className={classes.button} style={{ backgroundColor: red[500] }}
+                component={Link}
+                to="/notes/create"
+              >
                 <NoteIcon />
               </Button>
               <Typography variant="body2" align="center">
@@ -91,7 +94,7 @@ class Home extends Component {
               </Typography>
             </Grid>
           </Grid>
-          <Grid
+          {/* <Grid
             container
             alignItems="stretch"
             direction="column"
@@ -351,7 +354,7 @@ class Home extends Component {
                 </CardActions>
               </Card>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     );
