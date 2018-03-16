@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form'
-import mongoose from 'mongoose';
+import objectid from 'objectid';
 
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
@@ -49,7 +49,7 @@ class NoteCreate extends Component {
 
   handleSubmit = values => {
     values = {
-      _id: new mongoose.Types.ObjectId(),
+      _id: objectid(),
       ...values,
       color: this.state.activeColor,
     };

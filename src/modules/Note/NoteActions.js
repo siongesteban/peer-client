@@ -1,5 +1,5 @@
 import axios from 'axios';
-import mongoose from 'mongoose';
+import objectid from 'objectid';
 import moment from 'moment';
 
 import secret from '../../secret';
@@ -148,7 +148,7 @@ export const createNote = note => {
     } else { // This where offline storing happens.
       // Create a new note with a unique queue id.
       const newNote = {
-        _queueId: new mongoose.Types.ObjectId(),
+        _queueId: objectid(),
         ...note
       };
 
@@ -208,7 +208,7 @@ export const updateNote = (noteId, newNote, currentNote) => {
         });
     } else {
       const noteToQueue = {
-        _queueId: new mongoose.Types.ObjectId(),
+        _queueId: objectid(),
         _id: noteId,
         ...newNote
       };
