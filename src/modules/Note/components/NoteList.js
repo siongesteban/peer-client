@@ -47,7 +47,7 @@ const propTypes = {
   notes: PropTypes.array,
   location: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  successful: PropTypes.bool.isRequired,
+  isDeleteSuccessful: PropTypes.bool,
   getNotes: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
@@ -71,7 +71,7 @@ class NoteList extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.successful) {
+    if (this.props.isDeleteSuccessful) {
       this.toggleDialog();
       this.props.reset();
     }
@@ -184,7 +184,7 @@ const mapStateToProps = state => ({
   notes: state.notes.all,
   isLoading: state.notes.isLoading,
   isLoaded: state.notes.isLoaded,
-  successful: state.notes.successful,
+  isDeleteSuccessful: state.notes.isDeleteSuccessful,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

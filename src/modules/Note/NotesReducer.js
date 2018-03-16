@@ -37,10 +37,10 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case RESET:
       return {
         ...state,
-        current: {},
         isLoading: false,
         failed: false,
         successful: false,
+        isDeleteSuccessful: false,
       };
     case SET_CURRENT_NOTE:
       return {
@@ -98,7 +98,7 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
           note._id !== action.payload.noteId
         )),
         current: {},
-        successful: true,
+        isDeleteSuccessful: true,
         isLoading: false,
       }
     default:
