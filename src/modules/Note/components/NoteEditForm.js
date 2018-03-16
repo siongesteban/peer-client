@@ -81,9 +81,17 @@ class NoteEditForm extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: state.notes.current,
-});
+const mapStateToProps = (state, ownProps) => {
+  const currentNote = state.notes.current;
+
+  return {
+    initialValues: {
+      title: currentNote.title,
+      content: currentNote.content,
+      color: currentNote.color,
+    }
+  };
+};
 
 NoteEditForm.propTypes = propTypes;
 NoteEditForm = withStyles(styles)(NoteEditForm);

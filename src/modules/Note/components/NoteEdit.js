@@ -51,7 +51,7 @@ class NoteEdit extends Component {
       color: this.state.activeColor,
     };
 
-    this.props.updateNote(this.props.note._id, values);
+    this.props.updateNote(this.props.note._id, values, this.props.note);
   }
 
   handleClose = () => {

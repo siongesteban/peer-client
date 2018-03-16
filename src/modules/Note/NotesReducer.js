@@ -79,22 +79,25 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
       };
     case UPDATE_NOTE_SUCCESS:
       let noteIdFromPayload, noteIdFromStore;
-      
       return {
         ...state,
-        all: [
-          ...state.all.map(note => {
-            noteIdFromPayload = action.payload.note._id.toString();
-            noteIdFromStore = note._id.toString();
+        all: action.payload.note
+        ? [
+            ...state.all.map(note => {
+              noteIdFromPayload = action.payload.note._id.toString();
+              noteIdFromStore = note._id.toString();
 
-            if (noteIdFromPayload === noteIdFromStore) {
-              return action.payload.note;
-            }
+              if (noteIdFromPayload === noteIdFromStore) {
+                return action.payload.note;
+              }
 
-            return note;
-          })
-        ],
-        current: action.payload.note,
+              return note;
+            })
+          ]
+        : state.all,
+        current: !action.payload.note
+          ? state.current
+          : action.payload.note,
         successful: true,
         isLoading: false,
       };

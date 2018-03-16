@@ -56,10 +56,6 @@ class MainLayout extends Component {
     isUpdateAvailable: false,
   };
 
-  componentDidMount() {
-    console.log('v5');
-  }
-
   componentDidUpdate() {
     if (this.props.snackbarMessage) {
       this.props.showSnackbar();
