@@ -48,14 +48,15 @@ const ScheduleCard = props => {
             variant="display1"
             component="h2"
           >
-            {schedule.name} and friends
+            {schedule.name}
           </Typography>
           <div className={classes.editButtonBlock}>
             <Button
               className={classes.editButton}
               variant="fab"
-              color="primary"
               aria-label="add"
+              component={Link}
+              to={`/schedules/${schedule._id}/edit`}
             >
               <EditIcon />
             </Button>

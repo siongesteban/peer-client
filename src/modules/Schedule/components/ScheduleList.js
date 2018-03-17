@@ -10,14 +10,11 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import { CircularProgress } from 'material-ui/Progress';
-import Masonry from 'react-masonry-component';
 
-// import Note from './Note';
-// import NoteDetail from './NoteDetail';
-// import NoteCreate from './NoteCreate';
 import DeleteConfirmationDialog from '../../../components/ConfirmationDialog';
 import ScheduleCard from './ScheduleCard';
 import ScheduleCreate from './ScheduleCreate';
+import ScheduleEdit from './ScheduleEdit';
 
 import { getSchedules, deleteSchedule, reset } from '../ScheduleActions';
 
@@ -127,10 +124,10 @@ class ScheduleList extends Component {
             path="/schedules/create"
             component={ScheduleCreate}
           />
-          {/* <Route
-            path="/notes/:id"
-            component={NoteDetail}
-          /> */}
+          <Route
+            path="/schedules/:id/edit"
+            component={ScheduleEdit}
+          />
         </Switch>
         <DeleteConfirmationDialog
           isOpen={this.state.dialogIsOpen}
