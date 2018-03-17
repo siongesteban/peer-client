@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -39,6 +40,19 @@ const styles = theme => ({
     },
     right: theme.spacing.unit * 2,
   },
+  addCard: {
+    minHeight: 218,
+    color: '#827a7a',
+    borderRadius: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  addIcon: {
+    width: 120,
+    height: 120,
+  }
 });
 
 const propTypes = {
@@ -97,7 +111,7 @@ class ScheduleList extends Component {
   }
 
   render() {
-    const { classes, schedules, isLoading, isLoaded } = this.props;
+    const { classes, schedules, isLoading, isLoaded, goToCreate } = this.props;
 
     if (!this.state.canConnect) {
       return <Typography align="center">Can't connect right now.</Typography>;
@@ -153,6 +167,18 @@ class ScheduleList extends Component {
                   </Grid>
                 ))
               }
+              <Grid
+                item
+                xs={12}
+                md={3}
+              >
+                <div
+                  className={classes.addCard}
+                  onClick={goToCreate}
+                >
+                  <AddIcon className={classes.addIcon}  />
+                </div>
+              </Grid>
             </Grid>
           : <Typography align="center">You currently don't have a schedule.</Typography>
         }
@@ -179,6 +205,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  goToCreate: () => push('/schedules/create'),
   getSchedules,
   deleteSchedule,
   reset,
