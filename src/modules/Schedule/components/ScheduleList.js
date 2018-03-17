@@ -15,8 +15,9 @@ import Masonry from 'react-masonry-component';
 // import Note from './Note';
 // import NoteDetail from './NoteDetail';
 // import NoteCreate from './NoteCreate';
-import ScheduleCard from './ScheduleCard';
 import DeleteConfirmationDialog from '../../../components/ConfirmationDialog';
+import ScheduleCard from './ScheduleCard';
+import ScheduleCreate from './ScheduleCreate';
 
 import { getSchedules, deleteSchedule, reset } from '../ScheduleActions';
 
@@ -121,16 +122,16 @@ class ScheduleList extends Component {
 
     return (
       <div className={classes.root}>
-        {/* <Switch>
+        <Switch>
           <Route
-            path="/notes/create"
-            component={NoteCreate}
+            path="/schedules/create"
+            component={ScheduleCreate}
           />
-          <Route
+          {/* <Route
             path="/notes/:id"
             component={NoteDetail}
-          />
-        </Switch> */}
+          /> */}
+        </Switch>
         <DeleteConfirmationDialog
           isOpen={this.state.dialogIsOpen}
           isLoading={isLoading}
@@ -147,6 +148,7 @@ class ScheduleList extends Component {
                 schedules.map(schedule => (
                   <Grid
                     item
+                    key={schedule._id}
                     xs={12}
                     md={3}
                   >

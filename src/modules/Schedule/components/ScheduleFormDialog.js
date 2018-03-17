@@ -11,7 +11,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 const propTypes = {
-  classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
@@ -21,7 +20,6 @@ const propTypes = {
 class ScheduleFormDialog extends React.Component {
   render() {
     const {
-      classes,
       title,
       handleClose,
       submitForm,
@@ -39,17 +37,20 @@ class ScheduleFormDialog extends React.Component {
         >
           <DialogTitle id="form-dialog-title">{title}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Create a new schedule. You may also want to provide a little
-              description and a color to make your schedule unique.
-            </DialogContentText>
             {children}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button
+              onClick={handleClose}
+              color="primary"
+            >
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button
+              onClick={submitForm}
+              color="primary"
+              disabled={isLoading}
+            >
               Save
             </Button>
           </DialogActions>

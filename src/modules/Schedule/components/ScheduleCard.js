@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import EditIcon from 'material-ui-icons/Create';
 import Typography from 'material-ui/Typography';
+
+import formatDate from '../../../utils/formatDate';
 
 const styles = theme => ({
   cardContent: {
@@ -16,8 +19,9 @@ const styles = theme => ({
     borderTopRightRadius: 2,
     color: '#fff',
   },
-  description: {
-    padding: 20,
+  date: {
+    color: 'rgba(0, 0, 0, 0.5)',
+    marginLeft: 15,
   },
   actions: {
     padding: 0,
@@ -47,15 +51,22 @@ const ScheduleCard = props => {
             {schedule.name} and friends
           </Typography>
           <div className={classes.editButtonBlock}>
-            <Button variant="fab" color="primary" aria-label="add" className={classes.editButton}>
+            <Button
+              className={classes.editButton}
+              variant="fab"
+              color="primary"
+              aria-label="add"
+            >
               <EditIcon />
             </Button>
           </div>
-          <Typography
-            className={classes.description}
-            component="p"
-          >
-            {schedule.description}
+          <Typography className={classes.date}>
+            {
+              schedule.createdAt === schedule.updatedAt
+              ? 'Date Created: '
+              : 'Last Update: '
+            }
+            {formatDate(schedule.updatedAt)}
           </Typography>
         </CardContent>
         <CardActions>
