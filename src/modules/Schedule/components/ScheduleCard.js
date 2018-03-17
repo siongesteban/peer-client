@@ -10,13 +10,18 @@ import Typography from 'material-ui/Typography';
 import formatDate from '../../../utils/formatDate';
 
 const styles = theme => ({
+  header: {
+    padding: '0 20px',
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
+    minHeight: 120,
+    display: 'flex',
+    alignItems: 'center',
+  },
   cardContent: {
     padding: 0,
   },
   name: {
-    padding: 20,
-    borderTopLeftRadius: 2,
-    borderTopRightRadius: 2,
     color: '#fff',
   },
   date: {
@@ -42,14 +47,18 @@ const ScheduleCard = props => {
     <div>
       <Card>
         <CardContent className={classes.cardContent}>
-          <Typography
-            className={classes.name}
+          <div
+            className={classes.header}
             style={{ background: schedule.color }}
-            variant="display1"
-            component="h2"
           >
-            {schedule.name}
-          </Typography>
+            <Typography
+              className={classes.name}
+              variant="headline"
+              component="h2"
+            >
+              {schedule.name}
+            </Typography>
+          </div>
           <div className={classes.editButtonBlock}>
             <Button
               className={classes.editButton}
