@@ -80,7 +80,12 @@ const ScheduleCard = props => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            component={Link}
+            to={`/schedules/${schedule._id}`}
+          >
             View Schedule
           </Button>
         </CardActions>

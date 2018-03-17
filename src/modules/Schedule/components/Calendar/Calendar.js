@@ -13,7 +13,7 @@ import {
   Cell
 } from './Table';
 
-import { toTimeString, startOfWeek, addDays } from '../helpers';
+import { toTimeString, startOfWeek, addDays } from './helpers';
 
 const styles = theme => ({
   paper: {
@@ -22,9 +22,9 @@ const styles = theme => ({
 });
 
 export const appointmentPropType = PropTypes.shape({
-  nombre: PropTypes.string.isRequired,
-  hora_inicio: PropTypes.string.isRequired,
-  hora_termino: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  timeStart: PropTypes.string.isRequired,
+  timeEnd: PropTypes.string.isRequired,
   blockSpan: PropTypes.number
 });
 
@@ -33,11 +33,11 @@ const appointmentsPropType = PropTypes.arrayOf(appointmentPropType);
 class Calendar extends Component {
   static propTypes = {
     appointments: PropTypes.shape({
-      lunes: appointmentsPropType.isRequired,
-      martes: appointmentsPropType.isRequired,
-      miercoles: appointmentsPropType.isRequired,
-      jueves: appointmentsPropType.isRequired,
-      viernes: appointmentsPropType.isRequired
+      monday: appointmentsPropType.isRequired,
+      tuesday: appointmentsPropType.isRequired,
+      wednesday: appointmentsPropType.isRequired,
+      thursday: appointmentsPropType.isRequired,
+      friday: appointmentsPropType.isRequired
     }).isRequired
   };
   
@@ -59,8 +59,8 @@ class Calendar extends Component {
     
     for (let day in appointments) {
       appointments[day].forEach(appointment => {
-      	const startTime = appointment.hora_inicio;
-        const endTime = appointment.hora_termino;
+      	const startTime = appointment.timeStart;
+        const endTime = appointment.timeEnd;
       	let blockSpan = 0;
         
         if (startTime === '00:00' && endTime === '00:00') {
@@ -72,7 +72,7 @@ class Calendar extends Component {
           let minutes = parseInt(startSplit[1]);
           let timeString = appointment.startTime;
 
-          while (timeString !== appointment.hora_termino) {
+          while (timeString !== appointment.timeEnd) {
             blockSpan++;
             minutes += blockSize;
 
@@ -114,11 +114,11 @@ class Calendar extends Component {
         <Row key={time}>
           <TimeCell className="calendar__cell--time-col">{time}</TimeCell>
           <AppointmentCell className="calendar__cell--time-spacing" />
-          <AppointmentCell appointment={block.lunes} />
-          <AppointmentCell appointment={block.martes} />
-          <AppointmentCell appointment={block.miercoles} />
-          <AppointmentCell appointment={block.jueves} />
-          <AppointmentCell appointment={block.viernes} />
+          <AppointmentCell appointment={block.monday} />
+          <AppointmentCell appointment={block.tuesday} />
+          <AppointmentCell appointment={block.wednesday} />
+          <AppointmentCell appointment={block.thursday} />
+          <AppointmentCell appointment={block.friday} />
           <AppointmentCell className="calendar__cell--weekend" />
           <AppointmentCell className="calendar__cell--weekend" />
         </Row>

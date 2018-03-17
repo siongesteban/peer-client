@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { toTimeString } from '../helpers';
+import { toTimeString } from './helpers';
 
 class CurrentTimeIndicator extends Component {
 	state = {

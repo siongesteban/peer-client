@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import Schedule from './components/Schedule';
-import './styles.css';
+import Schedule from './Calendar/Schedule';
+import './Calendar/styles.css';
 
 const appointments = {
   monday: [
@@ -19,12 +19,14 @@ const appointments = {
   friday: []
 }
 
-const ScheduleContainer = () => {
-  return(
-    <div style={{ padding: 10, marginTop: 5 }}>
-      <Schedule appointments={appointments} />
-    </div>
-  );
-};
+class ScheduleDetail extends Component {
+  render() {
+    return(
+      <div style={{ padding: 10, marginTop: 5 }}>
+        <Schedule appointments={appointments} />
+      </div>
+    );
+  }
+}
 
-export default ScheduleContainer;
+export default ScheduleDetail;

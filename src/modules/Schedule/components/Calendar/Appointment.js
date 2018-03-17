@@ -5,12 +5,12 @@ import { appointmentPropType } from './Calendar';
 
 const Appointment = (props) => {
 	const { appointment } = props;  
-	const wholeDay = appointment.hora_inicio === '00:00' &&
-  	appointment.hora_termino === '00:00';
+	const wholeDay = appointment.timeStart === '00:00' &&
+  	appointment.timeEnd === '00:00';
     
   const time = wholeDay ?
   	'Whole Day' :
-    `${appointment.hora_inicio} - ${appointment.hora_termino}`;
+    `${appointment.timeStart} - ${appointment.timeEnd}`;
 
 	return (
     <div {...props} className="calendar__appointment">
@@ -18,7 +18,7 @@ const Appointment = (props) => {
         {time}
       </div>
       <div className="calendar__appointment__name">
-        {appointment.nombre}
+        {appointment.description}
       </div>
     </div>
 	);

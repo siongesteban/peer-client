@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Appointment from './Appointment';
 
 import { appointmentPropType } from './Calendar';
-import { DAYS_OF_WEEK } from '../constants';
+import { DAYS_OF_WEEK } from './constants';
 
 export const Row = (props) => (
   <div {...props}
