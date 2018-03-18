@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export const padLeft = (number, padding) => (
   padding.substring(number.toString().length) + number
 );
@@ -21,3 +23,13 @@ export const addDays = (date, days) => {
   
   return clone;
 };
+
+const round = (date, duration, method) => {
+  return moment(Math[method]((+date) / (+duration)) * (+duration)); 
+}
+
+export const parseTime = date => {
+  const newDate = moment(`2018-01-01 ${date.format('HH:mm')}`);
+
+  return round(newDate, moment.duration(30, 'minutes'), 'ceil');
+}

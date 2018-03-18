@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
@@ -41,61 +41,66 @@ const styles = theme => ({
   },
 });
 
-const ScheduleCard = props => {
-  const { classes, schedule } = props;
-  return (
-    <div>
-      <Card>
-        <CardContent className={classes.cardContent}>
-          <div
-            className={classes.header}
-            style={{ background: schedule.color }}
-          >
-            <Typography
-              className={classes.name}
-              variant="headline"
-              component="h2"
+class ScheduleCard extends Component {
+  render() {
+    const { classes, schedule, match } = this.props;
+
+    return (
+      <div>
+        <Card>
+          <CardContent className={classes.cardContent}>
+            <div
+              className={classes.header}
+              style={{ background: schedule.color }}
             >
-              {schedule.name}
+              <Typography
+                className={classes.name}
+                variant="headline"
+                component="h2"
+              >
+                {schedule.name}
+              </Typography>
+            </div>
+            <div className={classes.editButtonBlock}>
+              <Button
+                className={classes.editButton}
+                variant="fab"
+                aria-label="add"
+                component={Link}
+                to={`/schedules/${schedule._id}/edit`}
+              >
+                <EditIcon />
+              </Button>
+            </div>
+            <Typography className={classes.date}>
+              {
+                schedule.createdAt === schedule.updatedAt
+                ? 'Date Created: '
+                : 'Last Update: '
+              }
+              {formatDate(schedule.updatedAt)}
             </Typography>
-          </div>
-          <div className={classes.editButtonBlock}>
+          </CardContent>
+          <CardActions>
             <Button
-              className={classes.editButton}
-              variant="fab"
-              aria-label="add"
+              size="small"
+              color="primary"
               component={Link}
-              to={`/schedules/${schedule._id}/edit`}
+              to={`/schedules/${schedule._id}/appointments`}
             >
-              <EditIcon />
+              View Schedule
             </Button>
-          </div>
-          <Typography className={classes.date}>
-            {
-              schedule.createdAt === schedule.updatedAt
-              ? 'Date Created: '
-              : 'Last Update: '
-            }
-            {formatDate(schedule.updatedAt)}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="small"
-            color="primary"
-            component={Link}
-            to={`/schedules/${schedule._id}`}
-          >
-            View Schedule
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
-  );
+          </CardActions>
+        </Card>
+      </div>
+    );
+  }
 }
 
 ScheduleCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+ScheduleCard = withStyles(styles)(ScheduleCard);
+ScheduleCard = withRouter(ScheduleCard);
 
-export default withStyles(styles)(ScheduleCard);
+export default ScheduleCard;

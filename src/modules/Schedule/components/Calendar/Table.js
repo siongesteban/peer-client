@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Color from 'color';
 
 import Appointment from './Appointment';
 
@@ -60,9 +61,24 @@ export const AppointmentCell = (props) => {
     const height = (100 * blockSpan) + '%';
     const borderPixels = (blockSpan + 1) + 'px';
     const cssHeight = 'calc(' + height + ' + ' + borderPixels + ')';
+
+    const color = Color(appointment.color);
+    const darkColor = color.darken(0.1);
+    const lightColor = color.lighten(1);
+    const shadowColor = color.lighten(0.5);
     
     appointmentComponent = (
-	    <Appointment style={{ height: cssHeight }} appointment={appointment} />
+	    <Appointment
+        appointment={appointment} 
+        style={{
+          height: cssHeight,
+          background: '#fff',
+          color: darkColor,
+          border: `${darkColor} solid 1px`,
+          borderLeft: `${darkColor} solid 2px`,
+          boxShadow: `0 0 10px ${shadowColor}`
+        }}
+      />
     );
   }
 

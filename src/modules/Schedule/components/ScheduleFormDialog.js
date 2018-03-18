@@ -14,6 +14,7 @@ const propTypes = {
   title: PropTypes.string,
   handleClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  isOpen: PropTypes.bool,
   isLoading: PropTypes.bool,
 };
 
@@ -23,6 +24,7 @@ class ScheduleFormDialog extends React.Component {
       title,
       handleClose,
       submitForm,
+      isOpen,
       isLoading,
       children
     } = this.props;
@@ -30,7 +32,7 @@ class ScheduleFormDialog extends React.Component {
     return (
       <div>
         <Dialog
-          open
+          open={isOpen === undefined ? true : isOpen}
           aria-labelledby="form-dialog-title"
           maxWidth="xs"
           onClose={handleClose}

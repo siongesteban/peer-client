@@ -9,7 +9,13 @@ import {
   CREATE_SCHEDULE_SUCCESS,
   UPDATE_SCHEDULE_SUCCESS,
   DELETE_SCHEDULE_SUCCESS,
+  SET_CURRENT_APPOINTMENT,
 } from './ScheduleActions';
+import {
+  CREATE_APPOINTMENT_SUCCESS,
+  UPDATE_APPOINTMENT_SUCCESS,
+  DELETE_APPOINTMENT_SUCCESS,
+} from './AppointmentActions';
 
 const initialState = {
   all: [],
@@ -94,6 +100,50 @@ export const schedulesReducer = persistReducer(
           )),
           current: {},
           isDeleteSuccessful: true,
+          isLoading: false,
+        };
+      case CREATE_APPOINTMENT_SUCCESS:
+        const newAppointment = action.payload.appointment;
+        
+        return {
+          ...state,
+          all: [
+            ...state.all.map(schedule => {
+              if (schedule._id === newAppointment.parentSchedule) {
+                schedule.appointments = [
+                  ...schedule.appointments,
+                  newAppointment
+                ];
+              }
+
+              return schedule;
+            })
+          ],
+          successful: true,
+          isLoading: false,
+        };
+      case UPDATE_APPOINTMENT_SUCCESS:
+        const updatedAppointment = action.payload.appointment;
+
+        return {
+          all: [
+            ...state.all.map(schedule => {
+              if (schedule._id === updatedAppointment.parentSchedule) {
+                schedule.appointments = [
+                  ...schedule.appointments.map(appointment => {
+                    if (appointment._id === updatedAppointment._id) {
+                      return updatedAppointment;
+                    }
+
+                    return appointment;
+                  })
+                ]
+              }
+
+              return schedule;
+            })
+          ],
+          successful: true,
           isLoading: false,
         }
       default:

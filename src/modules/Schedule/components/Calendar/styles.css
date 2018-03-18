@@ -14,13 +14,6 @@ body {
   margin: 10px;
 }
 
-body, html {
-  background: #fff;
-  color: #555;
-  font-family: "Lato", sans-serif;
-  font-size: 14px;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -32,6 +25,9 @@ body, html {
 
 .calendar__body {
   position: relative;
+  max-height: 1000px;
+  overflow-y: scroll;
+  padding-top: 30px;
 }
 
 .calendar__cell {
@@ -110,10 +106,7 @@ body, html {
 }
 
 .calendar__appointment {
-  background: #e0f6d8;
-  color: #0c881d;
-  border: #bfecaf solid 1px;
-  border-left: #76db56 solid 2px;
+  font-family: 'Roboto Regular', sans-serif;
   padding: 4px 6px;
   font-size: 12px;
   position: absolute;
@@ -126,6 +119,7 @@ body, html {
 
 .calendar__appointment__name {
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .calendar__current-time {

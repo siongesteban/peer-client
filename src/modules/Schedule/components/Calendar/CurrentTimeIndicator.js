@@ -31,7 +31,7 @@ class CurrentTimeIndicator extends Component {
   	const { now } = this.state;
   	const minutesPassed = now.getHours() * 60 + now.getMinutes();
     
-  	return minutesPassed * 100 / 1440;
+  	return (minutesPassed * 100 / 1440);
   };
   
   render() {

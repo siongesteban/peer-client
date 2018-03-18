@@ -45,10 +45,10 @@ class Calendar extends Component {
   	super(props);
     this.normalizeTimeBlocks(props.appointments);
   }
-  
+
   componentWillReceiveProps(nextProps) {
   	if (this.props.appointments !== nextProps.appointments) {
-    	this.normalizeTimeBlock(nextProps.appointments);
+    	this.normalizeTimeBlocks(nextProps.appointments);
     }
   }
   
@@ -61,7 +61,7 @@ class Calendar extends Component {
       appointments[day].forEach(appointment => {
       	const startTime = appointment.timeStart;
         const endTime = appointment.timeEnd;
-      	let blockSpan = 0;
+        let blockSpan = 0;
         
         if (startTime === '00:00' && endTime === '00:00') {
         	blockSpan = Math.ceil(24 * 60 / blockSize);
@@ -119,8 +119,10 @@ class Calendar extends Component {
           <AppointmentCell appointment={block.wednesday} />
           <AppointmentCell appointment={block.thursday} />
           <AppointmentCell appointment={block.friday} />
-          <AppointmentCell className="calendar__cell--weekend" />
-          <AppointmentCell className="calendar__cell--weekend" />
+          <AppointmentCell appointment={block.saturday} />
+          <AppointmentCell appointment={block.sunday} />
+          {/* <AppointmentCell className="calendar__cell--weekend" />
+          <AppointmentCell className="calendar__cell--weekend" /> */}
         </Row>
       );
     }
@@ -150,7 +152,7 @@ class Calendar extends Component {
               <AppointmentCell />
             </Row>
             
-            <CurrentTimeIndicator />
+            {/* <CurrentTimeIndicator /> */}
           </div>
         </div>
       </Paper>

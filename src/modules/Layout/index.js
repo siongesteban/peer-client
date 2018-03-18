@@ -16,7 +16,6 @@ import AuthLayout from './components/AuthLayout';
 import Home from '../../views/Home';
 import Note from '../Note';
 import Schedule from '../Schedule';
-import ScheduleDetail from '../Schedule/components/ScheduleDetail';
 import Discussions from '../../views/Discussions';
 import User from '../User';
 import Login from '../Auth/components/Login';
@@ -103,11 +102,6 @@ class Layout extends Component {
             path="/notes"
             layout={MainLayout}
             component={Note}
-          />
-          <PrivateAppRoute
-            path="/schedules/:id"
-            layout={MainLayout}
-            component={ScheduleDetail}
           />
           <PrivateAppRoute
             path="/schedules"

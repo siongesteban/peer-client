@@ -16,6 +16,7 @@ import DeleteConfirmationDialog from '../../../components/ConfirmationDialog';
 import ScheduleCard from './ScheduleCard';
 import ScheduleCreate from './ScheduleCreate';
 import ScheduleEdit from './ScheduleEdit';
+import ScheduleDetail from './ScheduleDetail';
 
 import { getSchedules, deleteSchedule, reset } from '../ScheduleActions';
 
@@ -111,7 +112,7 @@ class ScheduleList extends Component {
   }
 
   render() {
-    const { classes, schedules, isLoading, isLoaded, goToCreate } = this.props;
+    const { classes, schedules, isLoading, isLoaded, goToCreate, match } = this.props;
 
     if (!this.state.canConnect) {
       return <Typography align="center">Can't connect right now.</Typography>;
@@ -135,11 +136,11 @@ class ScheduleList extends Component {
       <div className={classes.root}>
         <Switch>
           <Route
-            path="/schedules/create"
+            path={`/schedules/create`}
             component={ScheduleCreate}
           />
           <Route
-            path="/schedules/:id/edit"
+            path={`/schedules/:id/edit`}
             component={ScheduleEdit}
           />
         </Switch>
@@ -188,7 +189,7 @@ class ScheduleList extends Component {
           color="secondary"
           aria-label="add"
           component={Link}
-          to="/schedules/create"
+          to={`${match.url}/create`}
         >
           <AddIcon />
         </Button>
