@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -17,10 +18,7 @@ const styles = theme => ({
     position: 'relative',
   },
   button: {
-    width: '100%'
-  },
-  formGroup: {
-    marginBottom: 10
+    width: '100%',
   },
   buttonProgress: {
     color: theme.palette.primary.main,
@@ -32,14 +30,15 @@ const styles = theme => ({
   },
 });
 
-const validate = values => {
-  const fields = [
-    'givenName',
-    'familyName',
-    'email',
-    'password'
-  ];
+const propTypes = {
+  classes: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+};
 
+const validate = values => {
+  const fields = ['email', 'password'];
+  
   return validateFields(values, fields);
 };
 
@@ -49,38 +48,38 @@ class SignupForm extends Component {
 
     return(
       <form onSubmit={handleSubmit}>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup>
           <Field
-            component={TextField}
-            fullWidth
-            autoFocus
-            margin="normal"
-            name="givenName"
-            label="First Name"
-          />
-          <Field
-            component={TextField}
-            fullWidth
-            margin="normal"
-            name="familyName"
-            label="Last Name"
-          />
-          <Field
-            component={TextField}
-            fullWidth
-            margin="normal"
-            name="email"
-            type="email"
-            label="Email Address"
-          />
-          <Field
-            component={TextField}
-            fullWidth
-            margin="normal"
-            name="password"
-            type="password"
-            label="Password"
-          />
+              component={TextField}
+              fullWidth
+              autoFocus
+              margin="normal"
+              name="givenName"
+              label="First Name"
+            />
+            <Field
+              component={TextField}
+              fullWidth
+              margin="normal"
+              name="familyName"
+              label="Last Name"
+            />
+            <Field
+              component={TextField}
+              fullWidth
+              margin="normal"
+              name="email"
+              type="email"
+              label="Email Address"
+            />
+            <Field
+              component={TextField}
+              fullWidth
+              margin="normal"
+              name="password"
+              type="password"
+              label="Password"
+            />
           <div className={classes.wrapper}>
             <Button
               className={classes.button}
@@ -99,19 +98,26 @@ class SignupForm extends Component {
               />
             }
           </div>
+          <Button
+            className={classes.button}
+            variant="raised"
+            color="default"
+            component={Link}
+            to="/login"
+          >
+            Log In
+          </Button>
         </FormGroup>
       </form>
     );
   }
 }
 
-SignupForm.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+SignupForm.propTypes = propTypes;
+SignupForm = withStyles(styles)(SignupForm);
 SignupForm = reduxForm({
   form: 'signup',
   validate
 })(SignupForm);
-SignupForm = withStyles(styles)(SignupForm);
 
 export default SignupForm;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -82,6 +83,15 @@ class LoginForm extends Component {
               />
             }
           </div>
+          <Button
+            className={classes.button}
+            variant="raised"
+            color="default"
+            component={Link}
+            to="/signup"
+          >
+            Sign Up
+          </Button>
         </FormGroup>
       </form>
     );

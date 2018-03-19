@@ -56,17 +56,10 @@ class Signup extends Component {
     }
 
     return(
-      <div>
-        <TabContainer>
-          <SignupForm
-            onSubmit={this.submit}
-            isLoading={isLoading}
-          />
-          <Typography className={classes.subheading}>
-            Forgot your password?
-          </Typography>
-        </TabContainer>
-      </div>
+      <SignupForm
+        onSubmit={this.submit}
+        isLoading={isLoading}
+      />
     );
   }
 }
