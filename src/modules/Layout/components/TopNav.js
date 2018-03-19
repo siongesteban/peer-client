@@ -123,7 +123,7 @@ class TopNav extends Component {
           <img
             className={classes.logo}
             src="/static/images/logo/logo-inverse.svg"
-            alt="stdnt.io"
+            alt="Peer"
           />
           <Typography
             className={classes.title}
