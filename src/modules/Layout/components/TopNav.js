@@ -55,6 +55,8 @@ const styles = theme => ({
       marginLeft: 12,
     },
     marginRight: 12,
+    width: 40,
+    height: 40,
   },
   title: {
     flex: 1,
@@ -89,7 +91,7 @@ class TopNav extends Component {
   };
 
   render() {
-    const { classes, isOpen, logOut } = this.props;
+    const { classes, pageName, isOpen, logOut } = this.props;
     const { anchorEl } = this.state;
     const profileMenuIsOpen = Boolean(anchorEl);
 
@@ -118,9 +120,9 @@ class TopNav extends Component {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <Avatar
+          <img
             className={classes.logo}
-            src="/static/images/logo.png"
+            src="/static/images/logo/logo-inverse.svg"
             alt="stdnt.io"
           />
           <Typography
@@ -128,7 +130,7 @@ class TopNav extends Component {
             variant="title"
             color="inherit"
           >
-            stdnt.io v5
+             | {`${pageName.charAt(0).toUpperCase()}${pageName.slice(1)}`}
           </Typography>
           <Offline>
             <Button
@@ -185,7 +187,8 @@ class TopNav extends Component {
 }
 
 const mapStateToProps = state => ({
-  isOpen: state.layout.drawer.isOpen
+  isOpen: state.layout.drawer.isOpen,
+  pageName: state.layout.page.current,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

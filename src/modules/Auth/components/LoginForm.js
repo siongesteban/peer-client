@@ -52,7 +52,6 @@ class LoginForm extends Component {
           <Field
             component={TextField}
             fullWidth
-            margin="normal"
             name="email"
             type="email"
             label="Email Address"

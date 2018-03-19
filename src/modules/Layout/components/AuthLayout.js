@@ -20,6 +20,7 @@ const styles = theme => ({
     justifyContent: 'center',
   },
   flexItem: {
+    paddingTop: 0,
     [theme.breakpoints.down('xs')]: {
       width: '90%',
     },
@@ -38,21 +39,6 @@ const styles = theme => ({
     height: 96,
     display: 'block',
     margin: '30px auto',
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  divider: {
-    margin: theme.spacing.unit,
-  },
-  subheading: {
-    fontSize: '.8rem',
-  },
-  formGroup: {
-    marginBottom: 10,
-  },
-  fontAwesome: {
-    marginRight: theme.spacing.unit,
   },
 });
 
