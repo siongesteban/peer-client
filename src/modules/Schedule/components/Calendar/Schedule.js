@@ -14,6 +14,8 @@ import ArrowBackIcon from 'material-ui-icons/ArrowBack';
 
 import Calendar from './Calendar';
 
+import { updateThemeColor } from '../../../Layout/LayoutUtils';
+
 const styles = theme => ({
   appBar: {
     position: 'fixed',
@@ -29,6 +31,10 @@ const styles = theme => ({
 });
 
 class Schedule extends Component {
+  componentDidMount() {
+    updateThemeColor(this.props.schedule.color);
+  }
+
   render() {
     const { classes, schedule, appointments } = this.props;
 

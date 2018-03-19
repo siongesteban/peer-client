@@ -18,7 +18,10 @@ export const switchPage = () => {
   const path = window.location.pathname;
   let pageName = path === '/' ? 'home' : path.substr(1);
 
-  if (pageName.indexOf('notes') > -1) {
+  if (
+    pageName.indexOf('notes') > -1 ||
+    pageName.indexOf('schedules') > -1
+  ) {
     if (pageName.indexOf('/') === -1) {
       updateThemeColor(PRIMARY_COLOR);
     }
