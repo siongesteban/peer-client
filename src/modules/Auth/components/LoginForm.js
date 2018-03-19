@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';
 import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 
 import validateFields from '../../../utils/validate';
 
@@ -19,6 +20,7 @@ const styles = theme => ({
   },
   button: {
     width: '100%',
+    marginBottom: theme.spacing.unit,
   },
   buttonProgress: {
     color: theme.palette.primary.main,
@@ -28,6 +30,9 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  link: {
+    color: '#4CAF50',
+  }
 });
 
 const propTypes = {
@@ -37,7 +42,7 @@ const propTypes = {
 };
 
 const validate = values => {
-  const fields = ['email', 'password'];
+  const fields = ['username', 'password'];
   
   return validateFields(values, fields);
 };
@@ -47,52 +52,52 @@ class LoginForm extends Component {
     const { classes, handleSubmit, isLoading } = this.props;
 
     return(
-      <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Field
-            component={TextField}
-            fullWidth
-            name="email"
-            type="email"
-            label="Email Address"
-          />
-          <Field
-            component={TextField}
-            fullWidth
-            margin="normal"
-            name="password"
-            type="password"
-            label="Password"
-          />
-          <div className={classes.wrapper}>
-            <Button
-              className={classes.button}
-              variant="raised"
-              color="primary"
-              type="submit"
-              disabled={isLoading}
-            >
-              Log In
-            </Button>
-            {
-              isLoading &&
-              <CircularProgress
-                className={classes.buttonProgress}
-                size={24}
-              />
-            }
-          </div>
-          <Button
-            className={classes.button}
-            variant="raised"
-            color="default"
-            component={Link}
-            to="/signup"
-          >
-            Sign Up
-          </Button>
-        </FormGroup>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <FormGroup>
+            <Field
+              component={TextField}
+              fullWidth
+              margin="normal"
+              name="username"
+              label="Username"
+            />
+            <Field
+              component={TextField}
+              fullWidth
+              margin="normal"
+              name="password"
+              type="password"
+              label="Password"
+            />
+            <div className={classes.wrapper}>
+              <Button
+                className={classes.button}
+                variant="raised"
+                color="primary"
+                type="submit"
+                disabled={isLoading}
+              >
+                Log In
+              </Button>
+              {
+                isLoading &&
+                <CircularProgress
+                  className={classes.buttonProgress}
+                  size={24}
+                />
+              }
+            </div>
+            <Typography variant="caption" gutterBottom align="center">
+              New to Peer? &nbsp;
+              <Link className={classes.link} to="/signup">
+                Create an account
+              </Link>
+              .
+            </Typography>
+          </FormGroup>
+        </form>
+      </div>
     );
   }
 }

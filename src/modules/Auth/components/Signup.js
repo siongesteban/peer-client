@@ -4,38 +4,11 @@ import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-
-import TabContainer from '../../../components/TabContainer';
 import SignupForm from './SignupForm';
 
 import { signUp as signUpUser, reset } from '../AuthActions';
 
-const styles = theme => ({
-  root: {
-    height: '100%',
-    position: 'fixed',
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  divider: {
-    margin: theme.spacing.unit,
-  },
-  subheading: {
-    fontSize: '.8rem',
-  },
-  formGroup: {
-    marginBottom: 10,
-  },
-  fontAwesome: {
-    marginRight: theme.spacing.unit,
-  },
-});
-
 const propTypes = {
-  classes: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   signUpUser: PropTypes.func.isRequired,
 };
@@ -46,7 +19,6 @@ class Signup extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { isLoading, successful } = this.props.auth;
 
     if (successful) {
@@ -74,7 +46,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 Signup.propTypes = propTypes;
-Signup = withStyles(styles)(Signup);
 Signup = connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 export default Signup;

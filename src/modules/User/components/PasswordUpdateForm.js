@@ -46,7 +46,7 @@ const validate = values => {
     'confirmPassword'
   ];
   
-  return validateFields(values, fields);
+  return validateFields(values, fields, 'profileUpdate');
 };
 
 class PasswordUpdateForm extends Component {

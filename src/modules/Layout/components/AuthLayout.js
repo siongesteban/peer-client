@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
 import Card, { CardContent } from 'material-ui/Card';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Typography from 'material-ui/Typography';
 
 import { PRIMARY_COLOR } from '../LayoutConstants';
 
@@ -49,17 +47,8 @@ const propTypes = {
 };
 
 class AuthLayout extends Component {
-  state = {
-    value: this.props.location.pathname === '/login' ? 0 : 1,
-  };
-
-  switchTab = (e, value) => {
-    this.setState({ value });
-  }
-
   render() {
-    const { classes, children } = this.props;
-    const { value } = this.state;
+    const { classes, children, location } = this.props;
 
     return(
       <div className={classes.root}>
@@ -67,10 +56,21 @@ class AuthLayout extends Component {
           <img
             className={classes.logo}
             src="/static/images/logo/logo-inverse.svg"
+            alt="Peer"
           />
         </div>
         <Card className={classes.flexItem}>
-          <CardContent>
+          <CardContent style={{ paddingBottom: 0 }}>
+            <Typography
+              style={{ color: '#4C3F77'}}
+              variant="headline"
+            >
+              {
+                location.pathname.substr(1) === 'login'
+                ? 'Log In'
+                : 'Sign Up'
+              }
+            </Typography>
             {children}
           </CardContent>
         </Card>

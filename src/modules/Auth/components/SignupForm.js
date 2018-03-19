@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';
 import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 
 import validateFields from '../../../utils/validate';
 
@@ -19,6 +20,7 @@ const styles = theme => ({
   },
   button: {
     width: '100%',
+    marginBottom: theme.spacing.unit,
   },
   buttonProgress: {
     color: theme.palette.primary.main,
@@ -28,6 +30,9 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  link: {
+    color: theme.palette.primary.main,
+  }
 });
 
 const propTypes = {
@@ -37,9 +42,9 @@ const propTypes = {
 };
 
 const validate = values => {
-  const fields = ['email', 'password'];
+  const fields = ['username', 'password'];
   
-  return validateFields(values, fields);
+  return validateFields(values, fields, 'register');
 };
 
 class SignupForm extends Component {
@@ -49,28 +54,12 @@ class SignupForm extends Component {
     return(
       <form onSubmit={handleSubmit}>
         <FormGroup>
-          <Field
-              component={TextField}
-              fullWidth
-              autoFocus
-              margin="normal"
-              name="givenName"
-              label="First Name"
-            />
             <Field
               component={TextField}
               fullWidth
               margin="normal"
-              name="familyName"
-              label="Last Name"
-            />
-            <Field
-              component={TextField}
-              fullWidth
-              margin="normal"
-              name="email"
-              type="email"
-              label="Email Address"
+              name="username"
+              label="Username"
             />
             <Field
               component={TextField}
@@ -82,9 +71,9 @@ class SignupForm extends Component {
             />
           <div className={classes.wrapper}>
             <Button
+              style={{ background: '#43A047', color: '#fff' }}
               className={classes.button}
               variant="raised"
-              color="primary"
               type="submit"
               disabled={isLoading}
             >
@@ -98,15 +87,12 @@ class SignupForm extends Component {
               />
             }
           </div>
-          <Button
-            className={classes.button}
-            variant="raised"
-            color="default"
-            component={Link}
-            to="/login"
-          >
-            Log In
-          </Button>
+          <Typography variant="caption" gutterBottom align="center">
+            Already have an account? &nbsp;
+            <Link className={classes.link} to="/login">
+              Log In
+            </Link>
+          </Typography>
         </FormGroup>
       </form>
     );

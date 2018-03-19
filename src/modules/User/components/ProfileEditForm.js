@@ -42,9 +42,9 @@ const propTypes = {
 };
 
 const validate = values => {
-  const fields = ['givenName', 'familyName', 'email'];
+  const fields = ['givenName', 'familyName', 'username'];
   
-  return validateFields(values, fields);
+  return validateFields(values, fields, 'profileUpdate');
 };
 
 class ProfileEditForm extends Component {
@@ -84,10 +84,9 @@ class ProfileEditForm extends Component {
               <EmailIcon />
             </ListItemIcon>
             <Field
-              name="email"
-              type="email"
+              name="username"
+              type="username"
               component={TextField}
-              placeholder="Email"
               fullWidth
             />
           </ListItem>
