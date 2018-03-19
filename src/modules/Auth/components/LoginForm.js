@@ -20,6 +20,7 @@ const styles = theme => ({
   },
   button: {
     width: '100%',
+    marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
   buttonProgress: {
@@ -61,14 +62,16 @@ class LoginForm extends Component {
               margin="normal"
               name="username"
               label="Username"
+              type="text"
+              disabled={isLoading}
             />
             <Field
               component={TextField}
               fullWidth
-              margin="normal"
               name="password"
               type="password"
               label="Password"
+              disabled={isLoading}
             />
             <div className={classes.wrapper}>
               <Button

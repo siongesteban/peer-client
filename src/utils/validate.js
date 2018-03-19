@@ -23,10 +23,17 @@ const validate = (values, fields, formName) => {
     }
 
     if (
+      values.username &&
+      values.username.length < 6
+    ) {
+      errors.username = 'Username must be at least 6 characters long';
+    }
+
+    if (
       values.password &&
       values.password.length < 8
     ) {
-      errors.password = 'Password must be 8 characters long';
+      errors.password = 'Password must be at least 8 characters long';
     }
   
     if (

@@ -20,10 +20,11 @@ const styles = theme => ({
   },
   button: {
     width: '100%',
+    marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
   buttonProgress: {
-    color: theme.palette.primary.main,
+    color: '#43A047',
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -60,18 +61,23 @@ class SignupForm extends Component {
               margin="normal"
               name="username"
               label="Username"
+              type="text"
+              disabled={isLoading}
             />
             <Field
               component={TextField}
               fullWidth
-              margin="normal"
               name="password"
               type="password"
               label="Password"
+              disabled={isLoading}
             />
           <div className={classes.wrapper}>
             <Button
-              style={{ background: '#43A047', color: '#fff' }}
+              style={{
+                background: !isLoading ? '#43A047' : '#E0E0E0',
+                color: !isLoading ? '#fff' : '#A6A6A6'
+              }}
               className={classes.button}
               variant="raised"
               type="submit"

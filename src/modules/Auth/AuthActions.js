@@ -123,9 +123,7 @@ export const signUp = data => {
       .then(res => {
         dispatch(reset());
         dispatch(signupSuccess());
-        dispatch(setSnackbarMessage(
-          'Your account has been created. Please log in.'
-        ));
+        dispatch(setUser(res.data.token));
       })
       .catch(err => {
         const message = err.response.data.message;

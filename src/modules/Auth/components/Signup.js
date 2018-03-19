@@ -19,12 +19,10 @@ class Signup extends Component {
   }
 
   render() {
-    const { isLoading, successful } = this.props.auth;
+    const { isLoading, isAuthenticated } = this.props.auth;
 
-    if (successful) {
-      return <Redirect to={{
-        pathname: '/login'
-      }} />;
+    if (isAuthenticated) {
+      return <Redirect to="/" />;
     }
 
     return(
