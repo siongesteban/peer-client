@@ -25,7 +25,8 @@ const styles = theme => ({
     flexGrow: 1,
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing.unit + 4,
-      marginTop: 60
+      marginTop: 60,
+      marginLeft: 56,
     },
     [theme.breakpoints.down('xs')]: {
       paddingBottom: 70,
