@@ -4,14 +4,40 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Card from 'material-ui/Card';
+import Card, { CardContent } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+
+import { PRIMARY_COLOR } from '../LayoutConstants';
 
 const styles = theme => ({
   root: {
     height: '100%',
-    position: 'fixed',
+    background: PRIMARY_COLOR,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  flexItem: {
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '50%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '25%',
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '15%',
+    }
+  },
+  logo: {
+    width: 96,
+    height: 96,
+    display: 'block',
+    margin: '30px auto',
   },
   button: {
     margin: theme.spacing.unit,
@@ -50,43 +76,19 @@ class AuthLayout extends Component {
     const { value } = this.state;
 
     return(
-      <Grid
-        className={classes.root}
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid
-          item
-          xs={11}
-          sm={6}
-          lg={4}
-          xl={2}
-        >
-          <Card>
-            <AppBar position="static">
-              <Tabs
-                fullWidth
-                value={value}
-                onChange={this.switchTab}
-              >
-                <Tab
-                  label="Log In"
-                  component={Link}
-                  to="/login"
-                />
-                <Tab
-                  label="Sign Up"
-                  component={Link}
-                  to="/signup"
-                />
-              </Tabs>
-            </AppBar>
+      <div className={classes.root}>
+        <div className={classes.flexItem}>
+          <img
+            className={classes.logo}
+            src="/static/images/logo/logo-inverse.svg"
+          />
+        </div>
+        <Card className={classes.flexItem}>
+          <CardContent>
             {children}
-          </Card>
-        </Grid>
-      </Grid>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }

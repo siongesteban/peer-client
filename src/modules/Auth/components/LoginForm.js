@@ -19,9 +19,6 @@ const styles = theme => ({
   button: {
     width: '100%',
   },
-  formGroup: {
-    marginBottom: 10,
-  },
   buttonProgress: {
     color: theme.palette.primary.main,
     position: 'absolute',
@@ -50,7 +47,7 @@ class LoginForm extends Component {
 
     return(
       <form onSubmit={handleSubmit}>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup>
           <Field
             component={TextField}
             fullWidth

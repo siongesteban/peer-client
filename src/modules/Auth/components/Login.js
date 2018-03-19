@@ -57,17 +57,10 @@ class Login extends Component {
     }
 
     return(
-      <div>
-        <TabContainer>
-          <LoginForm
-            onSubmit={this.handleSubmit}
-            isLoading={isLoading}
-          />
-          <Typography className={classes.subheading}>
-            Forgot your password?
-          </Typography>
-        </TabContainer>
-      </div>
+      <LoginForm
+        onSubmit={this.handleSubmit}
+        isLoading={isLoading}
+      />
     );
   }
 }
