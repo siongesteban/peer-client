@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { appointmentPropType } from './Calendar';
+// import { appointmentPropType } from './Calendar';
 
 const Appointment = (props) => {
   const { appointment } = props;  
@@ -24,8 +24,8 @@ const Appointment = (props) => {
 	);
 }
 
-Appointment.propTypes = {
-	appointment: appointmentPropType
-};
+// Appointment.propTypes = {
+// 	appointment: appointmentPropType
+// };
 
 export default Appointment;

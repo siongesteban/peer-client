@@ -5,7 +5,7 @@ import Color from 'color';
 
 import Appointment from './Appointment';
 
-import { appointmentPropType } from './Calendar';
+// import { appointmentPropType } from './Calendar';
 import { DAYS_OF_WEEK } from './constants';
 
 export const Row = (props) => (
@@ -91,6 +91,6 @@ export const AppointmentCell = (props) => {
   );
 };
 
-AppointmentCell.propTypes = {
-	appointment: appointmentPropType
-};
+// AppointmentCell.propTypes = {
+// 	appointment: appointmentPropType
+// };
