@@ -1,4 +1,7 @@
 import React from 'react';
+import { push } from 'react-router-redux';
+
+import { store } from '../../../../store';
 
 // import { appointmentPropType } from './Calendar';
 
@@ -13,7 +16,15 @@ const Appointment = (props) => {
     `${appointment.timeStart} - ${appointment.timeEnd}`;
 
 	return (
-    <div className="calendar__appointment" {...props}>
+    <div
+      className="calendar__appointment"
+      {...props}
+      onClick={
+        () => store.dispatch(
+          push(`/schedules/${appointment.parentSchedule}/appointments/${appointment._id}/edit`)
+        )
+      }  
+    >
       <div className="calendar__appointment__time">
         {time}
       </div>

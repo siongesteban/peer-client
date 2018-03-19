@@ -63,7 +63,7 @@ export const createAppointment = newAppointment => {
   }
 };
 
-export const updateSchedule = (appointmentId, newAppointment) => {
+export const updateAppointment = (appointmentId, newAppointment) => {
   return dispatch => {
     dispatch(schedulesRequest());
 
@@ -78,7 +78,7 @@ export const updateSchedule = (appointmentId, newAppointment) => {
   }
 };
 
-export const deleteSchedule = appointmentId => {
+export const deleteAppointment = appointmentId => {
   return dispatch => {
     dispatch(schedulesRequest());
 

@@ -4,16 +4,17 @@ import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form'
+import * as moment from 'moment';
 
 import { withStyles } from 'material-ui/styles';
 
 import ScheduleFormDialog from '../ScheduleFormDialog';
 import ScheduleColorPicker from '../ScheduleColorPicker';
-import AppointmentCreateForm from './AppointmentCreateForm';
+import AppointmentEditForm from './AppointmentEditForm';
 import AppointmentDayPicker from './AppointmentDayPicker';
 
 import { reset } from '../../ScheduleActions';
-import { createAppointment } from '../../AppointmentActions'
+import { setCurrentAppointment, updateAppointment } from '../../AppointmentActions'
 import { parseTime } from '../Calendar/helpers';
 
 const styles = theme => ({
@@ -22,17 +23,18 @@ const styles = theme => ({
 
 const propTypes = {
   classes: PropTypes.object.isRequired,
-  createAppointment: PropTypes.func.isRequired,
+  setCurrentAppointment: PropTypes.func.isRequired,
+  updateAppointment: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
 };
 
-class AppointmentCreate extends Component {
+class AppointmentEdit extends Component {
   state = {
-    appointmentColor: '#757575',
-    appointmentDay: 'MONDAY',
-    timeStart: null,
-    timeEnd: null,
+    appointmentColor: this.props.currentAppointment.color,
+    appointmentDay: this.props.currentAppointment.day,
+    timeStart: moment(`2018 ${this.props.currentAppointment.timeStart}:00`),
+    timeEnd: moment(`2018 ${this.props.currentAppointment.timeEnd}:00`)
   }
 
   componentDidUpdate() {
@@ -64,28 +66,28 @@ class AppointmentCreate extends Component {
 
   handleSubmit = values => {
     values = {
-      scheduleId: this.props.schedule._id,
       ...values,
       day: this.state.appointmentDay,
-      timeStart: parseTime(this.state.timeStart).format('HH:mm'),
-      timeEnd: parseTime(this.state.timeEnd).format('HH:mm'),
+      timeStart: parseTime(moment(this.state.timeStart)).format('HH:mm'),
+      timeEnd: parseTime(moment(this.state.timeEnd)).format('HH:mm'),
       color: this.state.appointmentColor
     }
 
-    this.props.createAppointment(values);
+    this.props.updateAppointment(this.props.currentAppointment._id, values);
   }
 
   handleClose = () => {
+    this.props.setCurrentAppointment();
     this.props.close(this.props.schedule._id);
   }
 
   render() {
-    const { submitForm, isLoading } = this.props;
+    const { currentAppointment, submitForm, isLoading } = this.props;
     const { appointmentColor, appointmentDay, timeStart, timeEnd } = this.state;
     return (
       <ScheduleFormDialog
         handleClose={this.handleClose}
-        title={'New Appointment'}
+        title={'Edit Appointment'}
         isLoading={isLoading}
         submitForm={submitForm}
       >
@@ -93,7 +95,8 @@ class AppointmentCreate extends Component {
           currentDay={appointmentDay}
           handleSetAppointmentDay={this.handleSetAppointmentDay}
         />
-        <AppointmentCreateForm
+        <AppointmentEditForm
+          currentAppointment={currentAppointment}
           onSubmit={this.handleSubmit}
           isLoading={isLoading}
           timeStart={timeStart}
@@ -110,21 +113,25 @@ class AppointmentCreate extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   schedule: state.schedules.current,
+  currentAppointment: state.schedules.current.appointments.filter(
+    appointment => appointment._id === ownProps.match.params.appointmentId
+  )[0],
   isLoading: state.schedules.isLoading,
   successful: state.schedules.successful,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   close: scheduleId => push(`/schedules/${scheduleId}/appointments`),
-  submitForm: () => submit('appointmentCreate'),
-  createAppointment,
+  submitForm: () => submit('appointmentEdit'),
+  setCurrentAppointment,
+  updateAppointment,
   reset
 }, dispatch);
 
-AppointmentCreate.propTypes = propTypes;
-AppointmentCreate = withStyles(styles)(AppointmentCreate);
-AppointmentCreate = connect(mapStateToProps, mapDispatchToProps)(AppointmentCreate);
+AppointmentEdit.propTypes = propTypes;
+AppointmentEdit = withStyles(styles)(AppointmentEdit);
+AppointmentEdit = connect(mapStateToProps, mapDispatchToProps)(AppointmentEdit);
 
-export default AppointmentCreate;
+export default AppointmentEdit;

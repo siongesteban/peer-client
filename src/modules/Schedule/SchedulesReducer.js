@@ -1,5 +1,6 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+
 import {
   RESET,
   CLEAR_SCHEDULES,
@@ -14,6 +15,7 @@ import {
 import {
   CREATE_APPOINTMENT_SUCCESS,
   UPDATE_APPOINTMENT_SUCCESS,
+  SET_CURRENT_APPOINTMENT
 } from './AppointmentActions';
 
 const initialState = {
@@ -132,6 +134,7 @@ export const schedulesReducer = persistReducer(
         const updatedAppointment = action.payload.appointment;
 
         return {
+          ...state,
           all: [
             ...state.all.map(schedule => {
               if (schedule._id === updatedAppointment.parentSchedule) {
@@ -151,7 +154,14 @@ export const schedulesReducer = persistReducer(
           ],
           successful: true,
           isLoading: false,
-        }
+        };
+      case SET_CURRENT_APPOINTMENT:
+        const currentAppointment = action.payload.appointment;
+
+        return {
+          ...state,
+          currentAppointment: currentAppointment ? currentAppointment : {}
+        };
       default:
         return state;
     }

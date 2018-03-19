@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';
 import { FormGroup } from 'material-ui/Form';

@@ -11,6 +11,7 @@ import AddIcon from 'material-ui-icons/Add';
 import './Calendar/styles.css';
 import Schedule from './Calendar/Schedule';
 import AppointmentCreate from './Appointment/AppointmentCreate';
+import AppointmentEdit from './Appointment/AppointmentEdit';
 
 import { setCurrentSchedule } from '../ScheduleActions';
 
@@ -84,6 +85,10 @@ class ScheduleDetail extends Component {
             <Route
               path={`/schedules/${schedule._id}/appointments/create`}
               component={AppointmentCreate}
+            />
+            <Route
+              path={`/schedules/${schedule._id}/appointments/:appointmentId/edit`}
+              component={AppointmentEdit}
             />
           </Switch>
           <Schedule appointments={appointments} />
