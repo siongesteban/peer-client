@@ -23,9 +23,11 @@ const styles = theme => ({
   content: {
     width: '100%',
     flexGrow: 1,
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       padding: theme.spacing.unit + 4,
       marginTop: 60,
+    },
+    [theme.breakpoints.up('md')]: {
       marginLeft: 56,
     },
     [theme.breakpoints.down('xs')]: {
