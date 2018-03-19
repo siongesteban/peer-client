@@ -140,8 +140,6 @@ class Calendar extends Component {
     const { classes } = this.props;
     const rows = [];
 
-    console.log(docHeight);
-
     for (let time in this.timeBlocks) {
       const block = this.timeBlocks[time];
 

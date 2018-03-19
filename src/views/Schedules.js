@@ -10,8 +10,6 @@ function round(date, duration, method) {
 var date = moment('2018-12-08 09:31');
 var roundedDate = round(date, moment.duration(30, "minutes"), "ceil");
 
-console.log(roundedDate.format('h:mm'))
-
 const ScheduleView = () => <Schedule />;
 
 export default ScheduleView;
