@@ -16,13 +16,15 @@ export const toggleDrawer = () => {
 
 export const switchPage = () => {
   const path = window.location.pathname;
-  const pageName = path === '/' ? 'home' : path.substr(1);
+  let pageName = path === '/' ? 'home' : path.substr(1);
 
   if (pageName.indexOf('notes') > -1) {
     if (pageName.indexOf('/') === -1) {
       updateThemeColor(PRIMARY_COLOR);
     }
   }
+
+  pageName = pageName.split('/')[0];
 
   return dispatch => {
     dispatch(setSnackbarMessage());
