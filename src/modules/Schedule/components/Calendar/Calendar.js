@@ -20,7 +20,7 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       overflowX: 'scroll',
     },
-  }
+  },
 });
 
 export const appointmentPropType = PropTypes.shape({

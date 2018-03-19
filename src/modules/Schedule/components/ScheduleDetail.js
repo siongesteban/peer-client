@@ -93,9 +93,10 @@ class ScheduleDetail extends Component {
           </Switch>
           <Schedule appointments={appointments} />
           <Button
+            style={{ background: schedule.color }}
             className={classes.fab}
+            color="primary"
             variant="fab"
-            color="secondary"
             aria-label="add"
             component={Link}
             to={`/schedules/${schedule._id}/appointments/create`}
