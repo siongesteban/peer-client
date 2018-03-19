@@ -10,6 +10,9 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
 } from './AuthActions';
+import {
+  CLOSE_SNACKBAR
+} from '../Layout/LayoutActions';
 
 const initialState = {
   isAuthenticated: false,
@@ -25,6 +28,12 @@ const AuthReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: !isEmpty(action.user),
         user: action.user,
+      };
+    case CLOSE_SNACKBAR:
+      return {
+        ...state,
+        isAuthenticated: false,
+        successful: false,
       };
     case RESET:
       return {

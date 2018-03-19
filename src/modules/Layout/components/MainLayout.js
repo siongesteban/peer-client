@@ -96,8 +96,6 @@ class MainLayout extends Component {
   }
 }
 
-MainLayout.propTypes = propTypes;
-
 const mapStateToProps = state => ({
   snackbarMessage: state.layout.page.snackbarMessage,
   snackbarIsVisible: state.layout.page.snackbarIsVisible,
@@ -107,6 +105,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setSnackbarMessage,
   showSnackbar
 }, dispatch);
+
+MainLayout.propTypes = propTypes;
 MainLayout = withStyles(styles)(MainLayout);
 MainLayout = connect(mapStateToProps, mapDispatchToProps)(MainLayout);
 

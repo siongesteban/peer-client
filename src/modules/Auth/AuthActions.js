@@ -79,7 +79,7 @@ export const logIn = data => {
         if (err.response.status === 500) {
           message = err.response.data.message;
         } else {
-          message = 'The username or password is incorrect.';
+          message = 'Username or password is incorrect.';
         }
 
         dispatch(loginFailure());
