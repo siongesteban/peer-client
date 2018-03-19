@@ -32,7 +32,7 @@ export const HeaderCell = (props) => {
           'calendar__cell--day-of-week--today': isToday 
         })
       }
-      >
+    >
       {day &&
         <div className="calendar__cell--day-of-week__day">
           {DAYS_OF_WEEK[day.getDay()]}

@@ -20,9 +20,6 @@
 
 .calendar__body {
   position: relative;
-  padding-top: 20px;
-  overflow-y: auto;
-  max-height: 1000px;
 }
 
 @media only screen and (max-width: 600px) {
