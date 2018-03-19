@@ -10,26 +10,31 @@
 }
 
 /* THEME */
-body {
-  margin: 10px;
-}
-
 * {
   box-sizing: border-box;
 }
 
 .container {
-  width: 100%;
   margin: 0 auto;
 }
 
 .calendar__body {
   position: relative;
+  padding-top: 20px;
+  overflow-y: auto;
   max-height: 1000px;
-  overflow-y: scroll;
-  padding-top: 30px;
 }
 
+@media only screen and (max-width: 600px) {
+  .calendar__row {
+    min-width: 1000px;
+    padding-right: 20px;
+  }
+
+  .calendar__body {
+    min-width: 1000px;
+  }
+}
 .calendar__cell {
   height: 40px;
 }
@@ -48,7 +53,7 @@ body {
 
 .calendar__cell--day-of-week {
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Roboto", sans-serif;
   height: 80px;
   display: flex;
   flex-direction: column;
@@ -77,7 +82,7 @@ body {
 }
 
 .calendar__cell--time {
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1em;
   transform: translateY(-50%);
   font-size: 0.9em;
@@ -106,7 +111,7 @@ body {
 }
 
 .calendar__appointment {
-  font-family: 'Roboto Regular', sans-serif;
+  font-family: 'Roboto', sans-serif;
   padding: 4px 6px;
   font-size: 12px;
   position: absolute;
@@ -119,7 +124,6 @@ body {
 
 .calendar__appointment__name {
   font-weight: bold;
-  letter-spacing: 1px;
 }
 
 .calendar__current-time {
@@ -135,7 +139,7 @@ body {
  * del calendario.
  */
 .calendar__current-time__text {
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #fc3d39;
   position: absolute;
   top: 50%;

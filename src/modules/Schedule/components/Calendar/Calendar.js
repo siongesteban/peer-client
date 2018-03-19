@@ -16,7 +16,10 @@ import { toTimeString, startOfWeek, addDays } from './helpers';
 
 const styles = theme => ({
   paper: {
-    padding: 20
+    padding: 20,
+    [theme.breakpoints.down('sm')]: {
+      overflowX: 'scroll',
+    },
   }
 });
 
