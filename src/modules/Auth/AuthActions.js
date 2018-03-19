@@ -5,6 +5,7 @@ import { push } from 'react-router-redux'
 import { setAuthorizationToken } from './AuthUtils';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
 import { clearNotes } from '../Note/NoteActions';
+import { clearSchedules } from '../Schedule/ScheduleActions';
 import secret from '../../secret';
 
 export const SET_USER = 'auth/SET_USER';
@@ -91,6 +92,7 @@ export const logOut = () => {
   return dispatch => {
     dispatch(setUser(false));
     dispatch(clearNotes());
+    dispatch(clearSchedules());
     dispatch(push('/login'));
   }
 }

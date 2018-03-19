@@ -4,7 +4,7 @@ import { toTimeString } from './helpers';
 
 class CurrentTimeIndicator extends Component {
 	state = {
-		now: new Date
+		now: new Date()
 	};
   
   componentDidMount() {
@@ -23,7 +23,7 @@ class CurrentTimeIndicator extends Component {
   
   updateDate = () => {
   	this.setState({
-      now: new Date
+      now: new Date()
     });
   };
   

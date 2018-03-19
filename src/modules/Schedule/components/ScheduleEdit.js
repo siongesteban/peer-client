@@ -4,10 +4,7 @@ import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form'
-import objectid from 'objectid';
 
-import IconButton from 'material-ui/IconButton';
-import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 
 import ScheduleFormDialog from './ScheduleFormDialog';
@@ -58,7 +55,7 @@ class ScheduleEdit extends Component {
   }
 
   render() {
-    const { classes, schedule, submitForm, isLoading } = this.props;
+    const { schedule, submitForm, isLoading } = this.props;
     const { scheduleColor } = this.state;
     return (
       <ScheduleFormDialog
@@ -82,11 +79,9 @@ class ScheduleEdit extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  schedule: state.schedules.all.filter(schedule => {
-    if (schedule._id === ownProps.match.params.id) {
-      return schedule;
-    }
-  })[0],
+  schedule: state.schedules.all.filter(schedule => (
+    schedule._id === ownProps.match.params.id
+  ))[0],
   isLoading: state.schedules.isLoading,
   successful: state.schedules.successful,
 });

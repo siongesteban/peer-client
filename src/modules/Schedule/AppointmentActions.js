@@ -3,8 +3,6 @@ import axios from 'axios';
 import secret from '../../secret';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
 import {
-  SCHEDULES_FAILURE,
-  SCHEDULES_REQUEST,
   schedulesFailure,
   schedulesRequest
 } from './ScheduleActions';

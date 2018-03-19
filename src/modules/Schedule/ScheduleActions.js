@@ -4,6 +4,7 @@ import secret from '../../secret';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
 
 export const RESET = 'schedule/RESET';
+export const CLEAR_SCHEDULES = 'schedule/CLEAR_SCHEDULES';
 export const SET_CURRENT_SCHEDULE = 'schedule/SET_CURRENT_SCHEDULE';
 export const SCHEDULES_FAILURE = 'schedule/SCHEDULES_FAILURE';
 export const SCHEDULES_REQUEST = 'schedule/SCHEDULES_REQUEST';
@@ -15,6 +16,12 @@ export const DELETE_SCHEDULE_SUCCESS = 'schedule/DELETE_SCHEDULE_SUCCESS';
 export const reset = () => {
   return {
     type: RESET
+  };
+};
+
+export const clearSchedules = () => {
+  return {
+    type: CLEAR_SCHEDULES
   };
 };
 

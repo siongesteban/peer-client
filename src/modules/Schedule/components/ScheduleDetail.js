@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as moment from 'moment';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -70,6 +68,7 @@ class ScheduleDetail extends Component {
         case 'FRIDAY': friday.push(appointment); break;
         case 'SATURDAY': saturday.push(appointment); break;
         case 'SUNDAY': sunday.push(appointment); break;
+        default: break;
       }
     });
 
@@ -101,11 +100,9 @@ class ScheduleDetail extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  schedule: state.schedules.all.filter(schedule => {
-    if (schedule._id === ownProps.match.params.id) {
-      return schedule;
-    }
-  })[0],
+  schedule: state.schedules.all.filter(schedule => (
+    schedule._id === ownProps.match.params.id
+  ))[0],
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

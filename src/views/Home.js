@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
@@ -8,7 +7,6 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import NoteIcon from 'material-ui-icons/NoteAdd';
 import ScheduleIcon from 'material-ui-icons/DateRange';

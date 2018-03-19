@@ -16,7 +16,6 @@ import DeleteConfirmationDialog from '../../../components/ConfirmationDialog';
 import ScheduleCard from './ScheduleCard';
 import ScheduleCreate from './ScheduleCreate';
 import ScheduleEdit from './ScheduleEdit';
-import ScheduleDetail from './ScheduleDetail';
 
 import { getSchedules, deleteSchedule, reset } from '../ScheduleActions';
 

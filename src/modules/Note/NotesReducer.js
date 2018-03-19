@@ -32,6 +32,7 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
       return {
         ...state,
         all: [],
+        current: {},
         isLoaded: false,
       };
     case RESET:

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
@@ -43,7 +43,7 @@ const styles = theme => ({
 
 class ScheduleCard extends Component {
   render() {
-    const { classes, schedule, match } = this.props;
+    const { classes, schedule } = this.props;
 
     return (
       <div>

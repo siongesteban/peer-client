@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 
-import CurrentTimeIndicator from './CurrentTimeIndicator';
 import {
   Row,
   TimeCell,
@@ -68,8 +67,8 @@ class Calendar extends Component {
         }
         else {
           const startSplit = startTime.split(':');
-          let hour = parseInt(startSplit[0]);
-          let minutes = parseInt(startSplit[1]);
+          let hour = parseInt(startSplit[0], 10);
+          let minutes = parseInt(startSplit[1], 10);
           let timeString = appointment.startTime;
 
           while (timeString !== appointment.timeEnd) {
@@ -127,7 +126,7 @@ class Calendar extends Component {
       );
     }
     
-    const monday = startOfWeek(new Date);
+    const monday = startOfWeek(new Date());
   
     return (
       <Paper className={classes.paper}>

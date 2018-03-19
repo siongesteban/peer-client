@@ -16,7 +16,7 @@ import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
 import CheckIcon from 'material-ui-icons/CheckCircle';
-import AccountCircle from 'material-ui-icons/AccountCircle';
+// import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
 import { toggleDrawer } from '../LayoutActions';

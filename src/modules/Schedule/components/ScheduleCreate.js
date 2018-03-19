@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { submit } from 'redux-form'
-import objectid from 'objectid';
+import { submit } from 'redux-form';
 
-import IconButton from 'material-ui/IconButton';
-import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 
 import ScheduleFormDialog from './ScheduleFormDialog';
@@ -58,7 +55,7 @@ class ScheduleCreate extends Component {
   }
 
   render() {
-    const { classes, submitForm, isLoading } = this.props;
+    const { submitForm, isLoading } = this.props;
     const { scheduleColor } = this.state;
     return (
       <ScheduleFormDialog

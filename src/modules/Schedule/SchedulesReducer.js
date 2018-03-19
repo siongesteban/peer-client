@@ -2,6 +2,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import {
   RESET,
+  CLEAR_SCHEDULES,
   SET_CURRENT_SCHEDULE,
   SCHEDULES_FAILURE,
   SCHEDULES_REQUEST,
@@ -9,12 +10,10 @@ import {
   CREATE_SCHEDULE_SUCCESS,
   UPDATE_SCHEDULE_SUCCESS,
   DELETE_SCHEDULE_SUCCESS,
-  SET_CURRENT_APPOINTMENT,
 } from './ScheduleActions';
 import {
   CREATE_APPOINTMENT_SUCCESS,
   UPDATE_APPOINTMENT_SUCCESS,
-  DELETE_APPOINTMENT_SUCCESS,
 } from './AppointmentActions';
 
 const initialState = {
@@ -42,6 +41,13 @@ export const schedulesReducer = persistReducer(
           failed: false,
           successful: false,
           isDeleteSuccessful: false,
+        };
+      case CLEAR_SCHEDULES:
+        return {
+          ...state,
+          all: [],
+          current: {},
+          isLoaded: false,
         };
       case SET_CURRENT_SCHEDULE:
         return {

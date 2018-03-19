@@ -1,6 +1,5 @@
 import axios from 'axios';
 import objectid from 'objectid';
-import moment from 'moment';
 
 import secret from '../../secret';
 import { setSnackbarMessage } from '../Layout/LayoutActions';
@@ -220,7 +219,6 @@ export const updateNote = (noteId, newNote, currentNote) => {
         noteToQueue
       ]));
 
-      const user = getUser(localStorage.getItem('token'));
       const noteToStore = {
         ...currentNote,
         title: newNote.title,

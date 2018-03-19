@@ -64,7 +64,7 @@ export const AppointmentCell = (props) => {
 
     const color = Color(appointment.color);
     const darkColor = color.darken(0.1);
-    const lightColor = color.lighten(1);
+    // const lightColor = color.lighten(1);
     const shadowColor = color.lighten(0.5);
     
     appointmentComponent = (
