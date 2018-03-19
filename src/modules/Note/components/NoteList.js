@@ -168,7 +168,7 @@ class NoteList extends Component {
         <Button
           className={classes.fab}
           variant="fab"
-          color="secondary"
+          color="primary"
           aria-label="add"
           component={Link}
           to="/notes/create"

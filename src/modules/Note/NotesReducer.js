@@ -111,7 +111,7 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
             ))
           : state.all,
         current: {},
-        isDeleteSuccessful: true,
+        isDeleteSuccessful: action.payload.noteId ? true : false,
         isLoading: false,
       }
     default:
