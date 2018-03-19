@@ -16,7 +16,7 @@ import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
 import CheckIcon from 'material-ui-icons/CheckCircle';
-// import AccountCircle from 'material-ui-icons/AccountCircle';
+import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
 import { toggleDrawer } from '../LayoutActions';
@@ -91,7 +91,7 @@ class TopNav extends Component {
   };
 
   render() {
-    const { classes, pageName, isOpen, logOut } = this.props;
+    const { classes, pageName, user, isOpen, logOut } = this.props;
     const { anchorEl } = this.state;
     const profileMenuIsOpen = Boolean(anchorEl);
 
@@ -150,11 +150,15 @@ class TopNav extends Component {
               onClick={this.handleMenu}
               color="inherit"
             >
-              <Avatar
-                className={classes.avatar}
-                alt="Siong Esteban"
-                src="/static/images/siong.jpg"
-              />
+              {
+                user.imageUrl
+                ? <Avatar
+                    className={classes.avatar}
+                    alt="Siong Esteban"
+                    src={user.imageUrl}
+                  />
+                : <AccountCircleIcon className={classes.avatar} />
+              }
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -189,6 +193,7 @@ class TopNav extends Component {
 const mapStateToProps = state => ({
   isOpen: state.layout.drawer.isOpen,
   pageName: state.layout.page.current,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

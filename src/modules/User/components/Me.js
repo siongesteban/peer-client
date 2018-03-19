@@ -10,6 +10,7 @@ import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
+import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import PersonIcon from 'material-ui-icons/Person';
 import SettingsIcon from 'material-ui-icons/Settings';
 import LogoutIcon from 'material-ui-icons/ExitToApp';
@@ -21,6 +22,7 @@ const styles = theme => ({
   avatar: {
     width: 96,
     height: 96,
+    color: '#6C6C6C',
   },
 });
 
@@ -34,7 +36,7 @@ const propTypes = {
 class Me extends Component {
   render() {
     const { classes } = this.props;
-    const { givenName, familyName } = this.props.user;
+    const { givenName, familyName, imageUrl } = this.props.user;
 
     return (
       <div>
@@ -47,11 +49,15 @@ class Me extends Component {
               alignItems="center"
             >
               <Grid item>
-                <Avatar
-                  alt="Siong Esteban"
-                  src="/static/images/siong.jpg"
-                  className={classes.avatar}
-                />
+                {
+                  imageUrl
+                  ? <Avatar
+                      className={classes.avatar}
+                      alt="Siong Esteban"
+                      src="/static/images/siong.jpg"
+                    />
+                  : <AccountCircleIcon className={classes.avatar} />
+                }
               </Grid>
               <Grid item>
                 <Typography
