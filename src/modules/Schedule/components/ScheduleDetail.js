@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Switch, Route, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -79,17 +80,20 @@ class ScheduleDetail extends Component {
     return(
       <div>
         <div style={{ padding: 10, marginTop: 5 }}>
-          <AppointmentCreate
-            isOpen={this.state.createIsOpen}
-            handleClose={this.handleCloseCreate}
-          />
+          <Switch>
+            <Route
+              path={`/schedules/${schedule._id}/appointments/create`}
+              component={AppointmentCreate}
+            />
+          </Switch>
           <Schedule appointments={appointments} />
           <Button
             className={classes.fab}
             variant="fab"
             color="secondary"
             aria-label="add"
-            onClick={this.handleOpenCreate}
+            component={Link}
+            to={`/schedules/${schedule._id}/appointments/create`}
           >
             <AddIcon />
           </Button>

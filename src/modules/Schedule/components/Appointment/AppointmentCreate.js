@@ -40,7 +40,7 @@ class AppointmentCreate extends Component {
   componentDidUpdate() {
     if (this.props.successful) {
       this.props.reset();
-      this.props.handleClose();
+      this.handleClose();
     }
   }
 
@@ -77,13 +77,16 @@ class AppointmentCreate extends Component {
     this.props.createAppointment(values);
   }
 
+  handleClose = () => {
+    this.props.close(this.props.schedule._id);
+  }
+
   render() {
-    const { submitForm, isLoading, isOpen, handleClose } = this.props;
+    const { submitForm, isLoading } = this.props;
     const { appointmentColor, appointmentDay, timeStart, timeEnd } = this.state;
     return (
       <ScheduleFormDialog
-        handleClose={handleClose}
-        isOpen={isOpen}
+        handleClose={this.handleClose}
         title={'New Appointment'}
         isLoading={isLoading}
         submitForm={submitForm}
