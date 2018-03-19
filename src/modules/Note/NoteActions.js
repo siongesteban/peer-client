@@ -18,12 +18,16 @@ export const DELETE_NOTE_SUCCESS = 'note/DELETE_NOTE_SUCCESS';
 
 const noteCreateQueue = localStorage.getItem('queue:noteCreate');
 const noteUpdateQueue = localStorage.getItem('queue:noteUpdate');
+const noteDeleteQueue = localStorage.getItem('queue:noteDelete');
 
 if (!noteCreateQueue) {
   localStorage.setItem('queue:noteCreate', JSON.stringify([]));
 }
 if (!noteUpdateQueue) {
   localStorage.setItem('queue:noteUpdate', JSON.stringify([]));
+}
+if (!noteDeleteQueue) {
+  localStorage.setItem('queue:noteDelete', JSON.stringify([]));
 }
 
 export const clearNotes = () => {
@@ -232,20 +236,64 @@ export const updateNote = (noteId, newNote, currentNote) => {
   }
 };
 
-export const deleteNote = id => {
+// export const deleteNote = id => {
+//   return dispatch => {
+//     dispatch(notesRequest());
+
+//     axios.delete(`${secret.API_URL}/notes/${id}`)
+//       .then(res => {
+//         dispatch(deleteNoteSuccess(id));
+//       })
+//       .catch(err => {
+//         dispatch(notesFailure());
+//         dispatch(setSnackbarMessage(err.response.data.message));
+//       });
+//   }
+// }
+
+export const deleteNote = (noteId, deletedNote) => {
   return dispatch => {
     dispatch(notesRequest());
 
-    axios.delete(`${secret.API_URL}/notes/${id}`)
-      .then(res => {
-        dispatch(deleteNoteSuccess(id));
-      })
-      .catch(err => {
-        dispatch(notesFailure());
-        dispatch(setSnackbarMessage(err.response.data.message));
-      })
+    if (window.navigator.onLine) {
+      axios.delete(`${secret.API_URL}/notes/${noteId}`)
+        .then(res => {
+          if (deletedNote) {
+            if (deletedNote._queueId) {
+              dispatch(deleteNoteSuccess());
+  
+              const noteDeleteQueue = JSON.parse(localStorage.getItem('queue:noteDelete'));
+              localStorage.setItem('queue:noteDelete', JSON.stringify(
+                noteDeleteQueue.filter(note => (
+                  note._queueId !== deletedNote._queueId
+                ))
+              ));
+            }
+          } else {
+            dispatch(deleteNoteSuccess(noteId));
+          }
+        })
+        .catch(err => {
+          dispatch(notesFailure());
+          dispatch(setSnackbarMessage(err.response.data.message));
+        });
+    } else {
+      const noteToQueue = {
+        _queueId: objectid(),
+        _id: noteId,
+      };
+
+      const noteDeleteQueue = JSON.parse(localStorage.getItem('queue:noteDelete'));
+
+      localStorage.setItem('queue:noteDelete', JSON.stringify([
+        ...noteDeleteQueue,
+        noteToQueue
+      ]));
+
+      dispatch(deleteNoteSuccess(noteId));
+    }
   }
-}
+};
 
 // Post queued notes when on online
 window.addEventListener('online', () => {
@@ -262,6 +310,14 @@ window.addEventListener('online', () => {
   if (noteUpdateQueue && noteUpdateQueue.length > 0) {
     noteUpdateQueue.forEach(note => {
       store.dispatch(updateNote(note._id, note, null));
+    });
+  }
+
+  const noteDeleteQueue = JSON.parse(localStorage.getItem('queue:noteDelete'));
+
+  if (noteDeleteQueue && noteDeleteQueue.length > 0) {
+    noteDeleteQueue.forEach(note => {
+      store.dispatch(deleteNote(note._id, note));
     });
   }
 });

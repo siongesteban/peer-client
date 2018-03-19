@@ -105,9 +105,11 @@ export const notesReducer = persistReducer(persistConfig, (state = initialState,
     case DELETE_NOTE_SUCCESS:
       return {
         ...state,
-        all: state.all.filter(note => (
-          note._id !== action.payload.noteId
-        )),
+        all: action.payload.noteId
+          ? state.all.filter(note => (
+              note._id !== action.payload.noteId
+            ))
+          : state.all,
         current: {},
         isDeleteSuccessful: true,
         isLoading: false,
