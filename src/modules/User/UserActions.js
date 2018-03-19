@@ -40,16 +40,12 @@ export const updateUser = (id, data) => {
 
     axios.patch(`${secret.API_URL}/users/${id}`, data)
       .then(res => {
-        dispatch(reset());
-
-        const message = res.data.message;
-
         if (!data.newPassword) {
           dispatch(setUser(res.data.newToken));
         }
 
         dispatch(updateUserSuccess());
-        dispatch(setSnackbarMessage(message));
+        dispatch(setSnackbarMessage(res.data.message));
       })
       .catch(err => {
         const message = err.response.data.message;

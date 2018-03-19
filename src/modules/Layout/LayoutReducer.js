@@ -41,6 +41,7 @@ const LayoutReducer = (state = initialState, action) => {
       return {
         ...state,
         page: {
+          ...state.page,
           snackbarMessage: action.message,
           snackbarIsVisible: false,
         }

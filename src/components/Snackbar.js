@@ -11,6 +11,9 @@ const styles = theme => ({
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
   },
+  snackbar: {
+    zIndex: 9999,
+  },
 });
 
 const propTypes = {
@@ -42,7 +45,7 @@ class AppSnackbar extends Component {
     return (
       <div>
         <Snackbar
-          className={this.props.className}
+          className={classes.snackbar}
           ref="snackbar"
           anchorOrigin={{
             vertical: 'bottom',

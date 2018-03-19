@@ -20,7 +20,6 @@ const propTypes = {
   goBack: PropTypes.func.isRequired,
   submitForm: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
 };
 
 class ProfileEdit extends React.Component {
@@ -28,9 +27,14 @@ class ProfileEdit extends React.Component {
     passwordDialogisOpen: false,
   };
 
+  componentDidUpdate() {
+    if (this.props.user.successful) {
+      this.handleClose();
+    }
+  }
+
   handleSubmit = values => {
     this.props.updateUser(this.props.auth.user.id, values);
-    this.handleClose();
   }
 
   handleClose = () => {
@@ -45,7 +49,7 @@ class ProfileEdit extends React.Component {
 
   render() {
     const { submitForm } = this.props;
-    const { isLoading } = this.props.user;
+    const { isLoading, } = this.props.user;
     const { passwordDialogisOpen } = this.state;
 
     return (

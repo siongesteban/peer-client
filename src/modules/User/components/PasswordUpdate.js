@@ -22,7 +22,6 @@ class PasswordUpdate extends React.Component {
   componentDidUpdate() {
     if (this.props.user.successful) {
       this.props.handleClose();
-      this.props.reset();
     }
   }
 

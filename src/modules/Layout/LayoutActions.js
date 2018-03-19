@@ -5,6 +5,7 @@ export const TOGGLE_DRAWER = 'layout/TOGGLE_DRAWER';
 export const SWITCH_PAGE = 'layout/SWITCH_PAGE';
 export const SET_SNACKBAR_MESSAGE = 'layout/SET_SNACKBAR_MESSAGE';
 export const SHOW_SNACKBAR = 'layout/SHOW_SNACKBAR';
+export const CLOSE_SNACKBAR = 'layout/CLOSE_SNACKBAR';
 
 export const toggleDrawer = () => {
   return dispatch => {
@@ -40,6 +41,7 @@ export const switchPage = () => {
 
 export const setSnackbarMessage = (message = null) => {
   return dispatch => {
+    dispatch({ type: CLOSE_SNACKBAR });
     dispatch({
       type: SET_SNACKBAR_MESSAGE,
       message

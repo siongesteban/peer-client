@@ -4,6 +4,9 @@ import {
   UPDATE_USER_FAILURE,
   RESET
 } from './UserActions';
+import {
+  CLOSE_SNACKBAR
+} from '../Layout/LayoutActions';
 
 const initialState = {
   currentUser: {},
@@ -14,6 +17,12 @@ const initialState = {
 
 const UserReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLOSE_SNACKBAR:
+      return {
+        ...state,
+        failed: false,
+        successful: false,
+      };
     case UPDATE_USER_REQUEST:
       return {
         ...state,
