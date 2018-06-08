@@ -22,5 +22,3 @@ yarn-error.log*
 
 src/secret.js
 src/TestApp.js
-.firebaserc
-firebase.json
