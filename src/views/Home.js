@@ -87,7 +87,10 @@ class Home extends Component {
               </Typography>
             </Grid>
             <Grid item>
-              <Button variant="fab" color="primary" className={classes.button} style={{ backgroundColor: teal[500] }}>
+              <Button variant="fab" color="primary" className={classes.button} style={{ backgroundColor: teal[500] }}
+                component={Link}
+                to="/discussions"
+              >
                 <DiscussionIcon />
               </Button>
               <Typography variant="body2" align="center">
